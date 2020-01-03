@@ -68,12 +68,13 @@ public class SanPhamController {
         chiTietDonDatHang.setSanPhamID(sanPhamID);
         chiTietDonDatHang.setSoLuong(soLuong);
         chiTietDonDatHang.setGiaXuat(giaXuat);
-    	if(gioHang == null) {
+    	if(gioHang.getDonDatHangID() == null) {
     		 DonDatHang donDatHang = new DonDatHang();
              donDatHang.setTaiKhoanDatHangID(taiKhoanKhachHangID);
              donDatHang.setTinhTrang(0);
-             donDatHang.setChiTietDonDatHangs(chiTietDonDatHang);
              donDatHangService.save(donDatHang);
+             chiTietDonDatHang.setDonDatHangID(donDatHang.getDonDatHangID());
+             chiTietDonDatHangService.save(chiTietDonDatHang);
     	}
     	else {
     		chiTietDonDatHang.setDonDatHangID(gioHang.getDonDatHangID());

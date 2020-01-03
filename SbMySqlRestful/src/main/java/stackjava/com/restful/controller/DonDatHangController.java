@@ -50,6 +50,13 @@ public class DonDatHangController {
 	}
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody DonDatHang donDatHang) {
+//    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//    	Date henlaytu = null;
+//    	Date henlayden = null;
+//    	if(henlaytu != null)
+//    		henlaytu = sdf.parse(donDatHang.hen);
+//    	if(denNgay != null)
+//    		denngay = sdf.parse(denNgay);
     	donDatHangService.save(donDatHang);
     	if (donDatHang.getTinhTrang()==1) {
     		donDatHang.setSoHieuDon("SHĐ" + donDatHang.getDonDatHangID().toString());
@@ -87,7 +94,8 @@ public class DonDatHangController {
     	if (donDatHang.getTinhTrang()==1) {
     		donDatHang.setSoHieuDon("SHĐ" + donDatHang.getDonDatHangID().toString());
     	}
-        return ResponseEntity.ok(donDatHangService.save(donDatHang));
+    	donDatHangService.save(donDatHang);
+        return ResponseEntity.ok().build();
     }
 
 	@DeleteMapping("/{id}")

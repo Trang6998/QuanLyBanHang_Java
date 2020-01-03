@@ -1,4 +1,5 @@
 package stackjava.com.restful.service;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +25,10 @@ public class DonDatHangService {
 		return donDatHangRepository.findByProperty(soHieuDon, taiKhoanDatHangID, taiKhoanNhanVienID, tuNgay, denNgay, trangThai);
 	}
 	public List<ChiTietDonDatHang> findByTaiKhoan(Integer taiKhoanDatHangID){
-		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).getChiTietDonDatHangs();
+		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).isPresent() ? donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).get().getChiTietDonDatHangs() : new ArrayList<ChiTietDonDatHang>();
 	}
 	public DonDatHang getGioHang(Integer taiKhoanDatHangID){
-		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID);
+		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).isPresent() ? donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).get() : new DonDatHang();
 	}
 	public Optional<DonDatHang> findById(int id){
 		return donDatHangRepository.findById(id);

@@ -486,7 +486,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
             getDanhMuc() {
                 this.searchParamsLoaiSanPham.laDanhMucCha = false;
                 LoaiSanPhamApi.search(this.searchParamsLoaiSanPham).then(res => {
-                    this.dsDanhMuc=res.data;
+                    this.dsDanhMuc=res as any;
                 });
             },
             save(): void {

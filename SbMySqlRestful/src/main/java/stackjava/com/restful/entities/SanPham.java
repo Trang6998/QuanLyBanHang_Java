@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -101,6 +102,13 @@ public class SanPham {
 	@JsonIgnore
     private NhaCungCap nhaCungCap;
     
+	@Transient
+	private String TenLoai;
+
+	public String getTenLoai() {
+	    return loaiSanPham.getTenLoai();
+	}
+	
     public SanPham() {
 		super();
 		// TODO Auto-generated constructor stub

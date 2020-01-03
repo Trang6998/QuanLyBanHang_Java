@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -77,6 +78,21 @@ public class DonDatHang {
      @JoinColumn(name="taikhoannhanvienid",nullable = true, insertable = false, updatable = false)	
  	 @JsonIgnore
  	 private Users userNhanVien;
+     
+     @Transient
+     private Double TongTien;
+     
+     public Double getTongTien() {
+   	  	 Double tong = 0.0;
+		 if (lstChiTietDonDatHang.size() == 0)
+			 return 0.0;
+		 else {
+			 for (ChiTietDonDatHang ct : lstChiTietDonDatHang){
+				 tong += ct.getGiaXuat() * ct.getSoLuong();
+			 }
+			 return tong;
+		 }
+	 }
      
      public DonDatHang() {
 		super();

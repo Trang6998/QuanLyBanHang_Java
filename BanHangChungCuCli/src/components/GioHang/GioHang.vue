@@ -246,7 +246,10 @@
             muaNgay() {
                 this.donHang.tinhTrang = 1 // mua hàng
                 this.donHang.ngayDat = this.$moment();
-                this.donHang.chiTietDonDatHang = this.lstGioHang;
+                (this.donHang as any).tongTien = undefined;
+                (this.donHang as any).chiTietDonDatHangs = undefined;
+                (this.donHang as any).lstChiTietDonDatHang = this.lstGioHang;
+                //this.donHang.chiTietDonDatHang = this.lstGioHang;
                 DonDatHangApi.update(this.donHang.donDatHangID, this.donHang).then(res => {
                     this.getDataFromApi();
                     this.dialogConfirm = false;

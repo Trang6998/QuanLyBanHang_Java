@@ -12,9 +12,7 @@
                         <v-flex xs12>
                              <!-- :total-items="searchParamsChiTietDonDatHang.totalItems" -->
                             <v-data-table :headers="tableHeader"
-                                          :items="dsChiTietDonDatHang"
-                                          @update:pagination="getDataFromApi" :pagination.sync="searchParamsChiTietDonDatHang"
-                                         
+                                          :items="dsChiTietDonDatHang"                                         
                                           :loading="loadingTable" hide-actions
                                           class="elevation-1" style="border-collapse: unset; background-color: unset!important">
                                 <template slot="items" slot-scope="props">
@@ -242,7 +240,9 @@
                 this.dialog = false;
             },
             nhanDon() {
-                this.donHang.tinhTrang = 2 // đã nhận đơn - đang xử lý
+                this.donHang.tinhTrang = 2; // đã nhận đơn - đang xử lý
+                (this.donHang as any).chiTietDonDatHangs = undefined;
+                (this.donHang as any).tongTien = undefined;
                 DonDatHangApi.update(this.donHang.donDatHangID, this.donHang).then(res => {
                     this.$emit("getData");
                     this.$eventBus.$emit('UpdateSoDonChuaNhan', 0);
@@ -259,6 +259,8 @@
                 if (this.donHang.tinhTrang == 4 || this.donHang.tinhTrang == 3) {
                     this.donHang.ngayGioTraThucTe = this.$moment();
                 }
+                (this.donHang as any).chiTietDonDatHangs = undefined;
+                (this.donHang as any).tongTien = undefined;
                 DonDatHangApi.update(this.donHang.donDatHangID, this.donHang).then(res => {
                     this.dialog = false;
                     this.$emit("getData");

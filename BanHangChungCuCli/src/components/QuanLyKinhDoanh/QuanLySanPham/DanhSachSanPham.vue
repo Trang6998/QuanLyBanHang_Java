@@ -147,10 +147,10 @@ import { SanPham } from '@/models/SanPham';
             getDataFromApi(searchParamsSanPham: LoaiSanPhamApiSearchParams): void {
                 this.loadingTable = true;
                 SanPhamApi.search(searchParamsSanPham).then(res => {
-                    this.dsSanPham = res.data;
-                    this.searchParamsSanPham.totalItems = res.pagination.totalItems;
-                    this.searchParamsSanPham.page = (res.pagination.page as any) + 1;
-                    this.searchParamsSanPham.totalPages = res.pagination.totalPages;
+                    this.dsSanPham = res as any;
+                    //this.searchParamsSanPham.totalItems = res.pagination.totalItems;
+                    //this.searchParamsSanPham.page = (res.pagination.page as any) + 1;
+                    //this.searchParamsSanPham.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },
@@ -164,7 +164,7 @@ import { SanPham } from '@/models/SanPham';
                         loaiSanPhamID: null as any,
                         tenLoai: 'Tất cả'
                     } as LoaiSanPham);
-                    this.dsDanhMuc.push(...res.data);
+                    this.dsDanhMuc.push(...(res as any));
                     this.searchParamsSanPham.loaiSanPhamID = null as any;
                 });
             },

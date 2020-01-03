@@ -48,7 +48,7 @@
                                                 </v-img>
                                             </v-flex>
                                             <v-flex sm8>
-                                                <div>{{ props.item.tenSanPham }}</div>
+                                                <div>{{ props.item.sanPham.tenSanPham }}</div>
                                             </v-flex>
                                         </v-layout>
                                     </td>
@@ -106,7 +106,10 @@
 
                         </v-flex>
                         <v-flex xs12>
-                            <div>Trạng thái đơn: {{donHang.trangThaiDon}}</div>
+                            <div>Trạng thái đơn: {{ donHang.tinhTrang == 1 ? 'Chưa nhận' : 
+                              (donHang.tinhTrang == 2 ? 'Đã nhận' : 
+                              (donHang.tinhTrang == 3 ? 'Chưa thanh toán' :
+                              donHang.tinhTrang == 4 ? 'Hoàn thành' : '')) }}</div>
                         </v-flex>
 
                         <v-flex xs12 v-if="donHang.tinhTrang != 0">

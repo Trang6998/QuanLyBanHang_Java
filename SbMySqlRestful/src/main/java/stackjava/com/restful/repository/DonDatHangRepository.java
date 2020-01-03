@@ -33,7 +33,7 @@ public interface DonDatHangRepository extends JpaRepository<DonDatHang, Integer>
 			   + "WHERE ((ddh.taikhoandathangid = :taiKhoanDatHangID OR :taiKhoanDatHangID is NULL) "
 			   + "AND ddh.tinhtrang = 0) "
 			   + "LIMIT 1", nativeQuery = true)
-	 public DonDatHang findByTaiKhoan( @Param("taiKhoanDatHangID") Integer taiKhoanDatHangID);
+	 public Optional<DonDatHang> findByTaiKhoan( @Param("taiKhoanDatHangID") Integer taiKhoanDatHangID);
 }
 
 
