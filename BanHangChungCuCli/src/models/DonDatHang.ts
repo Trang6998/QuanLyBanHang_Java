@@ -18,5 +18,5 @@ export interface DonDatHang {
     tinhTrang: number;
     users?: Users; // taikhoandathang
     users1?: Users; // taikhoannhanvien
-    chiTietDonDatHang?: ChiTietDonDatHang[];
+    lstChiTietDonDatHang?: ChiTietDonDatHang[];
 }

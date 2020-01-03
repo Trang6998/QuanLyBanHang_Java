@@ -89,7 +89,6 @@ public class SanPham {
 	
 	@ManyToOne
     @JoinColumn(name="donvitinhid",nullable = true, insertable = false, updatable = false)	
-	@JsonIgnore
     private DonViTinh donViTinh;
 	
 	@ManyToOne

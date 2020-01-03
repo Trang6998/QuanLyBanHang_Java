@@ -118,11 +118,11 @@
                                                         hide-details></v-autocomplete>
                                     </v-flex>
                                     <v-flex xs12 sm4>
-                                        <v-autocomplete v-model="sanPham.loaisanPhamID"
+                                        <v-autocomplete v-model="sanPham.loaiSanPhamID"
                                                         label="Danh mục"
                                                         :items="dsDanhMuc"
                                                         item-text="tenLoai"
-                                                        item-value="loaisanPhamID"
+                                                        item-value="loaiSanPhamID"
                                                         :error-messages="errors.collect('Danh mục', 'frmAddEdit')"
                                                         v-validate="'required'"
                                                         data-vv-scope="frmAddEdit"
@@ -150,14 +150,17 @@
                                                       clearable></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm4>
-                                        <v-text-field v-model="sanPham.donViTinh"
-                                                      label="Đơn vị tính"
-                                                      type="text"
-                                                      :error-messages="errors.collect('Đơn vị tính', 'frmAddEdit')"
-                                                      v-validate="'required'"
-                                                      data-vv-scope="frmAddEdit"
-                                                      data-vv-name="Đơn vị tính"
-                                                      clearable></v-text-field>
+                                        <v-autocomplete v-model="sanPham.donViTinhID"
+                                                        label="Đơn vị tính"
+                                                        :items="dsDonVi"
+                                                        item-text="tenDonVi"
+                                                        item-value="donViTinhID"
+                                                        :error-messages="errors.collect('Đơn vị tính', 'frmAddEdit')"
+                                                        v-validate="'required'"
+                                                        data-vv-scope="frmAddEdit"
+                                                        data-vv-name="Đơn vị tính"
+                                                        clearable>
+                                        </v-autocomplete>
                                     </v-flex>
                                     <v-flex xs12 sm4>
                                         <v-text-field v-model="sanPham.kyHieuSanPham"
@@ -237,7 +240,7 @@
                                                         item-text="tenNhaCungCap"
                                                         item-value="nhaCungCapID"
                                                         :error-messages="errors.collect('Nhà cung cấp', 'frmAddEdit')"
-                                                        v-validate="'required'"
+                                                        v-validate="''"
                                                         data-vv-scope="frmAddEdit"
                                                         data-vv-name="Nhà cung cấp"
                                                         clearable>
@@ -391,6 +394,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
             show(isUpdate: boolean, item: SanPham) {
                 this.dialog = true;
                 this.getDanhMuc();
+                this.getDpnVi();
                 this.getDanhSachToaNha();
                 this.getNhaCungCap();
                 this.$validator.errors.clear("frmAddEdit");
@@ -489,7 +493,14 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                     this.dsDanhMuc=res as any;
                 });
             },
+            getDpnVi(){
+                var DonViTinhApiSearchParams = {} as DonViTinhApiSearchParams;
+                DonViTinhApi.search(DonViTinhApiSearchParams).then(res => {
+                    this.dsDonVi=res as any;
+                });
+            },
             save(): void {
+                (this.sanPham as any).tenLoai = undefined;
                 this.sanPham.giaBan = parseInt(this.sanPham.giaBan.toString().replace(".", ""));
                 this.$validator.validateAll('frmAddEdit').then((res) => {
                     if (res) {

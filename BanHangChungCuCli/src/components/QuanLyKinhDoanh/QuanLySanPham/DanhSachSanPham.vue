@@ -51,7 +51,7 @@
                                 <td>{{ props.item.tenLoai }}</td>
                                 <!--<td>{{ props.item.soLuong }}</td>-->
                                 <td>{{ props.item.giaBan | currency('', 0,{ thousandsSeparator: '.' })}}</td>
-                                <td>{{ props.item.tenDonVi }}</td>
+                                <td>{{ props.item.donViTinh ? props.item.donViTinh.tenDonVi : "" }}</td>
                                 <td>{{ props.item.nhaCungCap }}</td>
                                 <td class="text-xs-center text-nowrap" style="width:100px;white-space: nowrap">
                                     <v-btn icon small class="ma-0" @click="showModalThemSuaSanPham(true,props.item)">

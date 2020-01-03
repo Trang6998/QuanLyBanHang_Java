@@ -69,7 +69,15 @@ public class DonDatHang {
 	 @JsonIgnore
 	 private List<ChiTietDonDatHang> lstChiTietDonDatHang;
 	 
-     @ManyToOne
+     public List<ChiTietDonDatHang> getLstChiTietDonDatHang() {
+		return lstChiTietDonDatHang;
+	}
+
+	public void setLstChiTietDonDatHang(List<ChiTietDonDatHang> lstChiTietDonDatHang) {
+		this.lstChiTietDonDatHang = lstChiTietDonDatHang;
+	}
+
+	@ManyToOne
      @JoinColumn(name="taikhoandathangid",nullable = true, insertable = false, updatable = false)
      @JsonIgnore
      private Users userDatHang;
@@ -232,14 +240,6 @@ public class DonDatHang {
 
 	public void setTinhTrang(Integer tinhTrang) {
 		TinhTrang = tinhTrang;
-	}
-
-	public List<ChiTietDonDatHang> getChiTietDonDatHangs() {
-		return lstChiTietDonDatHang;
-	}
-
-	public void setChiTietDonDatHangs(ChiTietDonDatHang chiTietDonDatHangs) {
-		lstChiTietDonDatHang.add(chiTietDonDatHangs);
 	}
 
 	public Users getUserDatHang() {

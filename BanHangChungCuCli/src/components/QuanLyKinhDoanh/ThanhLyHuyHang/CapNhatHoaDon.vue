@@ -305,7 +305,7 @@ import SanPhamApi, { SanPhamApiSearchParams } from '@/apiResources/SanPhamApi';
             save(): void {
                 this.$validator.validateAll('frmAddEdit').then((res : any) => {
                     if (res) {
-                        this.hoaDon.chiTietDonDatHang = undefined;
+                        this.hoaDon.lstChiTietDonDatHang = undefined;
                         this.hoaDon.users = undefined;
                         this.hoaDon.users1 = undefined;
                         this.hoaDon.tinhTrang = 5;
