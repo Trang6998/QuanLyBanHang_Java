@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="users")
@@ -51,12 +53,15 @@ public class Users {
     public String SoDienThoai;
 
 	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+	@JsonIgnore
 	public List<DatDichVu> lstDatDichVu;
 	
 	@OneToMany(mappedBy = "userDatHang", cascade = CascadeType.ALL)
+	@JsonIgnore
     public List<DonDatHang> lstDonDatHang;
 
 	@OneToMany(mappedBy = "userNhanVien", cascade = CascadeType.ALL)
+	@JsonIgnore
     public List<DonDatHang> lstDonDatHang1;
 	
     public Users() {
@@ -162,29 +167,29 @@ public class Users {
 		SoDienThoai = soDienThoai;
 	}
 
-	public List<DatDichVu> getDatDichVu() {
-		return lstDatDichVu;
-	}
-
-	public void setDatDichVu(List<DatDichVu> datDichVu) {
-		lstDatDichVu = datDichVu;
-	}
-
-	public List<DonDatHang> getDonDatHang() {
-		return lstDonDatHang;
-	}
-
-	public void setDonDatHang(List<DonDatHang> donDatHang) {
-		lstDonDatHang = donDatHang;
-	}
-
-	public List<DonDatHang> getDonDatHang1() {
-		return lstDonDatHang1;
-	}
-
-	public void setDonDatHang1(List<DonDatHang> donDatHang1) {
-		lstDonDatHang1 = donDatHang1;
-	}
+//	public List<DatDichVu> getDatDichVu() {
+//		return lstDatDichVu;
+//	}
+//
+//	public void setDatDichVu(List<DatDichVu> datDichVu) {
+//		lstDatDichVu = datDichVu;
+//	}
+//
+//	public List<DonDatHang> getDonDatHang() {
+//		return lstDonDatHang;
+//	}
+//
+//	public void setDonDatHang(List<DonDatHang> donDatHang) {
+//		lstDonDatHang = donDatHang;
+//	}
+//
+//	public List<DonDatHang> getDonDatHang1() {
+//		return lstDonDatHang1;
+//	}
+//
+//	public void setDonDatHang1(List<DonDatHang> donDatHang1) {
+//		lstDonDatHang1 = donDatHang1;
+//	}
 
 	
 }

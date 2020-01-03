@@ -10,17 +10,18 @@
                 <v-card-text pa-0>
                     <v-layout row wrap>
                         <v-flex xs12>
+                             <!-- :total-items="searchParamsChiTietDonDatHang.totalItems" -->
                             <v-data-table :headers="tableHeader"
                                           :items="dsChiTietDonDatHang"
                                           @update:pagination="getDataFromApi" :pagination.sync="searchParamsChiTietDonDatHang"
-                                          :total-items="searchParamsChiTietDonDatHang.totalItems"
+                                         
                                           :loading="loadingTable" hide-actions
                                           class="elevation-1" style="border-collapse: unset; background-color: unset!important">
                                 <template slot="items" slot-scope="props">
                                     <td style="width: 40%; padding-left: 0px !important">
                                         <v-layout nowrap style="min-width: 200px">
                                             <v-flex xs4>
-                                                <v-img v-if="props.item.anhSanPham != null" slot="activator"
+                                                <v-img v-if="props.item.sanPham && props.item.sanPham.anhSanPham != null" slot="activator"
                                                        :src="APIS.HOST + 'fileupload/download?key=' + props.item.anhSanPham"
                                                        style="max-width: 100%;" id="img"
                                                        aspect-ratio="1"
@@ -49,11 +50,11 @@
                                                 </v-img>
                                             </v-flex>
                                             <v-flex xs8>
-                                                {{ props.item.tenSanPham }}
+                                                {{ props.item.sanPham ? props.item.sanPham.tenSanPham :'' }}
                                             </v-flex>
                                         </v-layout>
                                     </td>
-                                    <td>{{ props.item.giaBan | currency('', 0,{ thousandsSeparator: '.' })}}</td>
+                                    <td>{{ props.item.giaXuat | currency('', 0,{ thousandsSeparator: '.' })}}</td>
                                     <td>{{ props.item.soLuong }}</td>
                                     <td>{{ props.item.thanhTien | currency('', 0,{ thousandsSeparator: '.' }) }}</td>
                                     <td class="text-xs-center" style="width:80px;">
@@ -184,8 +185,8 @@
     import { Vue } from 'vue-property-decorator';
     import ChiTietDonDatHangApi, { ChiTietDonDatHangApiSearchParams } from '@/apiResources/ChiTietDonDatHangApi';
     import { ChiTietDonDatHang } from '@/models/ChiTietDonDatHang';
-import { DonDatHang } from '@/models/DonDatHang';
-import DonDatHangApi from '@/apiResources/DonDatHangApi';
+    import { DonDatHang } from '@/models/DonDatHang';
+    import DonDatHangApi from '@/apiResources/DonDatHangApi';
     import APIS from '@/apisServer';
 
     export default Vue.extend({
@@ -269,8 +270,8 @@ import DonDatHangApi from '@/apiResources/DonDatHangApi';
             getDataFromApi(searchParamsChiTietDonDatHang: ChiTietDonDatHangApiSearchParams): void {
                 this.loadingTable = true;
                 ChiTietDonDatHangApi.search(searchParamsChiTietDonDatHang).then(res => {
-                    this.dsChiTietDonDatHang = res.data;
-                    this.searchParamsChiTietDonDatHang.totalItems = res.pagination.totalItems;
+                    this.dsChiTietDonDatHang = res as any;
+                    //this.searchParamsChiTietDonDatHang.totalItems = (res as any).length;
                     this.loadingTable = false;
                 });
             },

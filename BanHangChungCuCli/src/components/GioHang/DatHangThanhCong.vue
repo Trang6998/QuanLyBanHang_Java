@@ -15,8 +15,6 @@
                         <v-flex xs12>
                             <v-data-table :headers="tableHeader"
                                           :items="dsChiTietDonDatHang"
-                                          @update:pagination="getDataFromApi" :pagination.sync="searchParamsChiTietDonDatHang"
-                                          :total-items="searchParamsChiTietDonDatHang.totalItems"
                                           :loading="loadingTable" hide-actions
                                           class="elevation-1" style="border-collapse: unset; background-color: unset!important">
                                 <template slot="items" slot-scope="props">
@@ -180,8 +178,8 @@
             getDataFromApi(searchParamsChiTietDonDatHang: ChiTietDonDatHangApiSearchParams): void {
                 this.loadingTable = true;
                 ChiTietDonDatHangApi.search(searchParamsChiTietDonDatHang).then(res => {
-                    this.dsChiTietDonDatHang = res.data;
-                    this.searchParamsChiTietDonDatHang.totalItems = res.pagination.totalItems;
+                    this.dsChiTietDonDatHang = res as any;
+                    //this.searchParamsChiTietDonDatHang.totalItems = res.pagination.totalItems;
                     this.loadingTable = false;
                 });
             },

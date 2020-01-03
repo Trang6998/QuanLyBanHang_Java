@@ -65,6 +65,7 @@ public class DonDatHang {
      private Integer TinhTrang;
      
 	 @OneToMany(mappedBy = "donDatHang", cascade = CascadeType.ALL)
+	 @JsonIgnore
 	 private List<ChiTietDonDatHang> lstChiTietDonDatHang;
 	 
      @ManyToOne
@@ -77,12 +78,12 @@ public class DonDatHang {
  	 @JsonIgnore
  	 private Users userNhanVien;
      
-     private DonDatHang() {
+     public DonDatHang() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	private DonDatHang(Integer taiKhoanDatHangID, Integer taiKhoanNhanVienID, String soHieuDon, Date ngayDat, Date henLayTu,
+     public DonDatHang(Integer taiKhoanDatHangID, Integer taiKhoanNhanVienID, String soHieuDon, Date ngayDat, Date henLayTu,
 			Date henLayDen, Date henTraTu, Date henTraDen, Boolean laTre, String lyDoTraTre, Date ngayGioTraThucTe,
 			String ghiChu, Integer tinhTrang, List<ChiTietDonDatHang> chiTietDonDatHang, Users userDatHang,
 			Users userNhanVien) {
@@ -105,139 +106,139 @@ public class DonDatHang {
 		this.userNhanVien = userNhanVien;
 	}
 
-	private Integer getDonDatHangID() {
+    public Integer getDonDatHangID() {
 		return DonDatHangID;
 	}
 
-	private void setDonDatHangID(Integer donDatHangID) {
+    public void setDonDatHangID(Integer donDatHangID) {
 		DonDatHangID = donDatHangID;
 	}
 
-	private Integer getTaiKhoanDatHangID() {
+    public Integer getTaiKhoanDatHangID() {
 		return TaiKhoanDatHangID;
 	}
 
-	private void setTaiKhoanDatHangID(Integer taiKhoanDatHangID) {
+	public void setTaiKhoanDatHangID(Integer taiKhoanDatHangID) {
 		TaiKhoanDatHangID = taiKhoanDatHangID;
 	}
 
-	private Integer getTaiKhoanNhanVienID() {
+	public Integer getTaiKhoanNhanVienID() {
 		return TaiKhoanNhanVienID;
 	}
 
-	private void setTaiKhoanNhanVienID(Integer taiKhoanNhanVienID) {
+	public void setTaiKhoanNhanVienID(Integer taiKhoanNhanVienID) {
 		TaiKhoanNhanVienID = taiKhoanNhanVienID;
 	}
 
-	private String getSoHieuDon() {
+	public String getSoHieuDon() {
 		return SoHieuDon;
 	}
 
-	private void setSoHieuDon(String soHieuDon) {
+	public void setSoHieuDon(String soHieuDon) {
 		SoHieuDon = soHieuDon;
 	}
 
-	private Date getNgayDat() {
+	public Date getNgayDat() {
 		return NgayDat;
 	}
 
-	private void setNgayDat(Date ngayDat) {
+	public void setNgayDat(Date ngayDat) {
 		NgayDat = ngayDat;
 	}
 
-	private Date getHenLayTu() {
+	public Date getHenLayTu() {
 		return HenLayTu;
 	}
 
-	private void setHenLayTu(Date henLayTu) {
+	public void setHenLayTu(Date henLayTu) {
 		HenLayTu = henLayTu;
 	}
 
-	private Date getHenLayDen() {
+	public Date getHenLayDen() {
 		return HenLayDen;
 	}
 
-	private void setHenLayDen(Date henLayDen) {
+	public void setHenLayDen(Date henLayDen) {
 		HenLayDen = henLayDen;
 	}
 
-	private Date getHenTraTu() {
+	public Date getHenTraTu() {
 		return HenTraTu;
 	}
 
-	private void setHenTraTu(Date henTraTu) {
+	public void setHenTraTu(Date henTraTu) {
 		HenTraTu = henTraTu;
 	}
 
-	private Date getHenTraDen() {
+	public Date getHenTraDen() {
 		return HenTraDen;
 	}
 
-	private void setHenTraDen(Date henTraDen) {
+	public void setHenTraDen(Date henTraDen) {
 		HenTraDen = henTraDen;
 	}
 
-	private Boolean getLaTre() {
+	public Boolean getLaTre() {
 		return LaTre;
 	}
 
-	private void setLaTre(Boolean laTre) {
+	public void setLaTre(Boolean laTre) {
 		LaTre = laTre;
 	}
 
-	private String getLyDoTraTre() {
+	public String getLyDoTraTre() {
 		return LyDoTraTre;
 	}
 
-	private void setLyDoTraTre(String lyDoTraTre) {
+	public void setLyDoTraTre(String lyDoTraTre) {
 		LyDoTraTre = lyDoTraTre;
 	}
 
-	private Date getNgayGioTraThucTe() {
+	public Date getNgayGioTraThucTe() {
 		return NgayGioTraThucTe;
 	}
 
-	private void setNgayGioTraThucTe(Date ngayGioTraThucTe) {
+	public void setNgayGioTraThucTe(Date ngayGioTraThucTe) {
 		NgayGioTraThucTe = ngayGioTraThucTe;
 	}
 
-	private String getGhiChu() {
+	public String getGhiChu() {
 		return GhiChu;
 	}
 
-	private void setGhiChu(String ghiChu) {
+	public void setGhiChu(String ghiChu) {
 		GhiChu = ghiChu;
 	}
 
-	private Integer getTinhTrang() {
+	public Integer getTinhTrang() {
 		return TinhTrang;
 	}
 
-	private void setTinhTrang(Integer tinhTrang) {
+	public void setTinhTrang(Integer tinhTrang) {
 		TinhTrang = tinhTrang;
 	}
 
-	private List<ChiTietDonDatHang> getChiTietDonDatHangs() {
+	public List<ChiTietDonDatHang> getChiTietDonDatHangs() {
 		return lstChiTietDonDatHang;
 	}
 
-	private void setChiTietDonDatHangs(List<ChiTietDonDatHang> chiTietDonDatHangs) {
-		lstChiTietDonDatHang = chiTietDonDatHangs;
+	public void setChiTietDonDatHangs(ChiTietDonDatHang chiTietDonDatHangs) {
+		lstChiTietDonDatHang.add(chiTietDonDatHangs);
 	}
 
-	private Users getUserDatHang() {
+	public Users getUserDatHang() {
 		return userDatHang;
 	}
 
-	private void setUserDatHang(Users userDatHang) {
+	public void setUserDatHang(Users userDatHang) {
 		userDatHang = userDatHang;
 	}
 
-	private Users getUserNhanVien() {
+	public Users getUserNhanVien() {
 		return userNhanVien;
 	}
 
-	private void setUserNhanVien(Users userNhanVien) {
+	public void setUserNhanVien(Users userNhanVien) {
 		userNhanVien = userNhanVien;
 	}
 	

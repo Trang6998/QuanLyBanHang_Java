@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,19 +40,25 @@ public class ChiTietDonDatHang {
     private Integer SoLuong;
 
 	@Column(name = "giaxuat")
-    private double GiaXuat;
+    private Double GiaXuat;
 
 	@ManyToOne
     @JoinColumn(name="dondathangid",insertable = false, updatable = false)	
 	@JsonIgnore
     private DonDatHang donDatHang;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
     @JoinColumn(name="sanphamid",nullable = true, insertable = false, updatable = false)	
-	@JsonIgnore
     private SanPham sanPham;
-	
-    public ChiTietDonDatHang(Integer donDatHangID, Integer sanPhamID, Integer soLuong, double giaXuat,
+
+    @Transient
+    private Double ThanhTien;
+
+    public Double getThanhTien() {
+    	return GiaXuat*SoLuong;
+    }
+
+    public ChiTietDonDatHang(Integer donDatHangID, Integer sanPhamID, Integer soLuong, Double giaXuat,
 			DonDatHang donDatHang, SanPham sanPham) {
 		super();
 		this.DonDatHangID = donDatHangID;
@@ -99,11 +106,11 @@ public class ChiTietDonDatHang {
 		this.SoLuong = soLuong;
 	}
 
-	public double getGiaXuat() {
+	public Double getGiaXuat() {
 		return GiaXuat;
 	}
 
-	public void setGiaXuat(double giaXuat) {
+	public void setGiaXuat(Double giaXuat) {
 		this.GiaXuat = giaXuat;
 	}
 

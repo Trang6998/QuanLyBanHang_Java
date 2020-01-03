@@ -1,5 +1,6 @@
 package stackjava.com.restful.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,6 +41,7 @@ public class DichVu {
 	
 	@Column(name = "toanha")
 	private String ToaNha;
+	
 	
 	public Integer getDichVuID() {
 		return DichVuID;
@@ -99,14 +102,14 @@ public class DichVu {
 	
 	@OneToMany(mappedBy = "dichVu", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<DatDichVu> lstDatDichVu;
+	private List<DatDichVu> lstDatDichVu = new ArrayList<DatDichVu>();
 
-	public List<DatDichVu> getDatDichVu() {
-		return lstDatDichVu;
-	}
-	public void setDatDichVu(List<DatDichVu> DatDichVu) {
-		this.lstDatDichVu = DatDichVu;
-	}
+//	public List<DatDichVu> getDatDichVu() {
+//		return lstDatDichVu;
+//	}
+//	public void setDatDichVu(List<DatDichVu> DatDichVu) {
+//		this.lstDatDichVu = DatDichVu;
+//	}
 
 	
 }

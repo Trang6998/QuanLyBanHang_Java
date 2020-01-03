@@ -15,6 +15,7 @@
                           :error-messages="errorMessages"
                           @click:append="showMenuDate"
                           :disabled="disabled"
+                          :readonly="readonly"
                           @input="dateInput"></v-text-field>
                 <v-dialog ref="dialogDate"
                           v-model="menuDate"
@@ -30,11 +31,10 @@
                         <v-btn flat color="primary" @click="menuDate = false">Hủy</v-btn>
                         <v-btn flat color="primary" @click="$refs.dialogDate.save(selectedDate); saveDate(selectedDate)">OK</v-btn>
                     </v-date-picker>
-            </v-dialog>
+                </v-dialog>
         </v-flex>
         <v-flex xs5>
-            <v-text-field
-                          :value="timeString"
+            <v-text-field :value="timeString"
                           mask="time"
                           single-line
                           append-icon="access_time"
@@ -44,22 +44,21 @@
                           :hide-details="hideDetails"
                           @click:append="showMenuTime"
                           :disabled="disabled"
+                          :readonly="readonly"
                           @input="timeInput"></v-text-field>
-                <v-dialog ref="dialogTime"
-                          v-model="menuTime"
-                          :return-value.sync="selectedTime"
-                          lazy
-                          full-width
-                          width="290px">
-                    <v-time-picker v-if="menuTime"
-                                   v-model="selectedTime"
-                                   full-width
-                                   format="24hr"
-                                   locale="vi-vn">
-                        <v-spacer></v-spacer>
-                        <v-btn flat color="primary" @click="menuTime = false">Hủy</v-btn>
-                        <v-btn flat color="primary" @click="$refs.dialogTime.save(selectedTime); saveTime(selectedTime)">OK</v-btn>
-                    </v-time-picker>
+            <v-dialog ref="dialogTime"
+                      v-model="menuTime"
+                      :return-value.sync="selectedTime" persistent
+                      lazy
+                      full-width
+                      width="290px">
+                <v-time-picker v-if="menuTime"
+                               v-model="selectedTime"
+                               full-width>
+                    <v-spacer></v-spacer>
+                    <v-btn flat color="primary" @click="menuTime = false">Hủy</v-btn>
+                    <v-btn flat color="primary" @click="$refs.dialogTime.save(selectedTime); saveTime(selectedTime)">OK</v-btn>
+                </v-time-picker>
             </v-dialog>
         </v-flex>
     </v-layout>
@@ -69,7 +68,7 @@
     export default Vue.extend({
         props: {
             value: {
-                type: [Date, String],
+                type: [Date, String, Object],
                 default: null
             },
             label: {
@@ -89,17 +88,21 @@
                 default: 'YYYY-MM-DD'
             },
             max: {
-                type: [Date, String],
+                type: [Date, String,Object],
                 default: null
             },
             min: {
-                type: [Date, String],
+                type: [Date, String,Object],
                 default: null
             },
             disabled: {
                 type: Boolean,
                 default: false
             },
+            readonly: {
+                type: Boolean,
+                default: false
+            }, 
             hideDetails: {
                 type: Boolean,
                 default: false
@@ -154,6 +157,7 @@
         },
         methods: {
             dateInput(val: any) {
+                
                 if (val.length == 8 && this.$moment(val, "DDMMYYYY").isValid()) {
                     this.selectedDate = this.$moment(val, "DDMMYYYY").format('YYYY-MM-DD');
                     if (this.max !== null && this.$moment(this.dateTime) > this.$moment(this.max)) {

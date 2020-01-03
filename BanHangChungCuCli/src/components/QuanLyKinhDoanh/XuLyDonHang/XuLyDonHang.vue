@@ -4,12 +4,12 @@
             <v-flex xs12><h3>Danh sách đơn đặt hàng</h3></v-flex>
             <v-flex xs12 md3>
                 <v-datetimepicker label="Từ ngày" hide-details v-model="searchParamsDonDatHang.tuNgay"
-                                  :max="searchParamsDonDatHang.tuNgay"
+                                  :max="new Date()"
                                   @input="getDataFromApi(searchParamsDonDatHang)"></v-datetimepicker>
             </v-flex>
             <v-flex xs12 md3>
                 <v-datetimepicker label="Đến ngày" hide-details v-model="searchParamsDonDatHang.denNgay"
-                                  :min="searchParamsDonDatHang.denNgay" @input="getDataFromApi(searchParamsDonDatHang)"></v-datetimepicker>
+                                  :min="searchParamsDonDatHang.tuNgay" @input="getDataFromApi(searchParamsDonDatHang)"></v-datetimepicker>
             </v-flex>
             <v-flex xs12 sm4>
                 <v-select :items="dsToaNha"
@@ -30,7 +30,7 @@
             </v-flex>
             <v-flex xs12>
                 <v-radio-group hide-details v-model="searchParamsDonDatHang.tinhTrang" @change="getDataFromApi(searchParamsDonDatHang)" row>
-                    <v-radio label="Tất cả" :value="-1"></v-radio>
+                    <v-radio label="Tất cả" :value="null"></v-radio>
                     <v-radio label="Chưa nhận đơn" :value="1"></v-radio>
                     <v-radio label="Đang xử lý" :value="2"></v-radio>
                     <v-radio label="Hoàn thành" :value="4"></v-radio>
@@ -65,7 +65,7 @@
                                 Phòng: {{ props.item.tenPhong }}
                             </small>
                         </td>
-                        <td>{{ props.item.ngayDat === null ? "" : props.item.ngayDat|moment('HH:mm DD/MM/YY') }}</td>
+                        <td>{{ props.item.ngayDat === null ? "" : props.item.ngayDat|moment('HH:mm DD/MM/YYYY') }}</td>
                         <td>
                             <span v-if="props.item.henLayTu != null && props.item.henLayDen != null">
                                 <span v-if="soSanhNgay(props.item.henLayTu, props.item.henLayDen)">
@@ -93,7 +93,10 @@
                         <td>
                             {{ props.item.tongTien | currency('', 0,{ thousandsSeparator: '.' }) }}
                         </td>
-                        <td>{{ props.item.trangThaiDon }}</td>
+                        <td>{{ props.item.tinhTrang == 1 ? 'Chưa nhận' : 
+                              (props.item.tinhTrang == 2 ? 'Đã nhận' : 
+                              (props.item.tinhTrang == 3 ? 'Chưa thanh toán' :
+                              props.item.tinhTrang == 4 ? 'Hoàn thành' : '')) }}</td>
                         <td class="text-xs-center text-nowrap" style="width:100px; white-space: nowrap">
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
@@ -105,7 +108,7 @@
                             </v-tooltip>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                    <v-btn icon flat small v-on="on" color="dark green" @click="showCapNhatDonHang(props.item)" class="ma-0">
+                                    <v-btn icon flat small v-on="on" color="dark green" @click="showCapNhatDonHang(props.item)" class="ma-0" v-if="props.item.tinhTrang != 3 && props.item.tinhTrang != 4">
                                         <v-icon small>edit</v-icon>
                                     </v-btn>
                                 </template>
@@ -169,7 +172,7 @@
                     { text: 'Trạng thái đơn', value: 'trangThaiDon', align: 'center', sortable: false },
                     { text: 'Thao tác', value: '#', align: 'center', sortable: false },
                 ],
-                searchParamsDonDatHang: { includeEntities: true, rowsPerPage: 10, tinhTrang: -1 } as DonDatHangApiSearchParams,
+                searchParamsDonDatHang: { includeEntities: true, rowsPerPage: 10, tinhTrang: null as any } as DonDatHangApiSearchParams,
                 loadingTable: false,
                 selectedDonDatHang: {} as DonDatHang,
                 dialogConfirmDelete: false,
@@ -193,18 +196,18 @@
         },
         created() {
             this.searchParamsDonDatHang.tuNgay = this.$moment().startOf('month');
-            this.searchParamsDonDatHang.denNgay = new Date();
+            this.searchParamsDonDatHang.denNgay = this.$moment().endOf('month');
             this.getDataFromApi(this.searchParamsDonDatHang);
-            this.getDanhSachToaNha();
+            //this.getDanhSachToaNha();
         },
         methods: {
             getDataFromApi(searchParamsDonDatHang: DonDatHangApiSearchParams): void {
                 this.loadingTable = true;
                 DonDatHangApi.search(searchParamsDonDatHang).then(res => {
-                    this.dsDonDatHang = res.data;
-                    this.searchParamsDonDatHang.totalItems = res.pagination.totalItems;
-                    this.searchParamsDonDatHang.page = (res.pagination.page as any) + 1;
-                    this.searchParamsDonDatHang.totalPages = res.pagination.totalPages;
+                    this.dsDonDatHang = res as any;
+                    // this.searchParamsDonDatHang.totalItems = res.pagination.totalItems;
+                    // this.searchParamsDonDatHang.page = (res.pagination.page as any) + 1;
+                    // this.searchParamsDonDatHang.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },
@@ -246,16 +249,16 @@
                     this.$snotify.error('Xóa thất bại!');
                 });
             },
-            getDanhSachToaNha() {
-                HTTP.get('odata/ToaNha').then(res => {
-                    this.dsToaNha.push({
-                        ToaNhaId: null as any,
-                        TenToaNha: 'Tất cả'
-                    } as any);
-                    this.dsToaNha.push(...res.data.value);
-                    this.searchParamsDonDatHang.toaNhaID = null as any;
-                })
-            },
+            // getDanhSachToaNha() {
+            //     HTTP.get('odata/ToaNha').then(res => {
+            //         this.dsToaNha.push({
+            //             ToaNhaId: null as any,
+            //             TenToaNha: 'Tất cả'
+            //         } as any);
+            //         this.dsToaNha.push(...res.data.value);
+            //         this.searchParamsDonDatHang.toaNhaID = null as any;
+            //     })
+            // },
             soSanhNgay(tuNgay: Date, denNgay: Date) {
                 if (tuNgay.toString().slice(0, 10) == denNgay.toString().slice(0, 10)) {
                     return true;

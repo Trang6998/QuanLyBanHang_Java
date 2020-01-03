@@ -9,7 +9,7 @@
                     <v-flex xs12>
                         <v-layout row wrap>
                             <v-flex xs12 md4>
-                                <v-text-field ma-0 pa-0 label="Tìm kiếm" hide-details v-model="searchParamsDanhMuc.tenLoaiSanPham" @input="getDataFromApi(searchParamsDanhMuc)" ma-0 pa-0></v-text-field>
+                                <v-text-field ma-0 pa-0 label="Tìm kiếm" hide-details v-model="searchParamsDanhMuc.tenLoaiSanPham" @input="getDataFromApi(searchParamsDanhMuc)"></v-text-field>
                             </v-flex>
                             <v-flex xs12 md4>
                                 <v-radio-group hide-details v-model="searchParamsDanhMuc.laDanhMucCha" @change="getDataFromApi(searchParamsDanhMuc)" row>
@@ -37,10 +37,10 @@
                                 <td class="text-xs-center">{{ props.index + 1 }}</td>
                                 <td>{{ props.item.tenLoai }}</td>
                                 <td>{{ props.item.moTa }}</td>
-                                <td v-if="props.item.danhMucCon.length == 0"><a>{{props.item.soSanPham}} sản phẩm</a></td>
+                                <td v-if="props.item.loaiSanPhamCon.length == 0"><a>{{props.item.soSanPham}} sản phẩm</a></td>
                                 <td v-else>
                                     <b>{{props.item.soSanPham}} sản phẩm, trong đó: <br /></b>
-                                    <a v-for="(dm, i) in props.item.danhMucCon" :key="i">
+                                    <a v-for="(dm, i) in props.item.loaiSanPhamCon" :key="i">
                                         +{{dm.tenLoai}}: {{dm.soSanPham}} sản phẩm <br />
                                     </a>
                                 </td>
@@ -126,10 +126,10 @@ import { LoaiSanPham } from '@/models/LoaiSanPham';
             getDataFromApi(searchParamsDanhMuc: LoaiSanPhamApiSearchParams): void {
                 this.loadingTable = true;
                 LoaiSanPhamApi.search(searchParamsDanhMuc).then(res => {
-                    this.dsDanhMuc = res.data;
-                    this.searchParamsDanhMuc.totalItems = res.pagination.totalItems;
-                    this.searchParamsDanhMuc.page = (res.pagination.page as any) + 1;
-                    this.searchParamsDanhMuc.totalPages = res.pagination.totalPages;
+                    this.dsDanhMuc = res as any;
+                    //this.searchParamsDanhMuc.totalItems = res.pagination.totalItems;
+                    //this.searchParamsDanhMuc.page = (res.pagination.page as any) + 1;
+                    //this.searchParamsDanhMuc.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

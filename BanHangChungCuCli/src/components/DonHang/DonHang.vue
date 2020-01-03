@@ -1,20 +1,18 @@
 <template>
     <v-flex xs12>
-        <!--<v-breadcrumbs divider="/" class="pa-0">
-            <v-breadcrumbs-item to="/danh-sach-don-hang" exact>Đơn hàng</v-breadcrumbs-item>
-        </v-breadcrumbs>-->
+        
         <v-layout row wrap>
             <v-flex xs12><h3>Danh sách đơn hàng</h3></v-flex>
             <v-flex xs12>
                 <v-layout>
                     <v-flex xs12 md3>
                         <v-datepicker label="Từ ngày" hide-details v-model="searchParamsDonDatHang.tuNgay"
-                                      :max="searchParamsDonDatHang.tuNgay" @input="getDataFromApi(searchParamsDonDatHang)"
+                                      :max="new Date()" @input="getDataFromApi(searchParamsDonDatHang)"
                                       clearable></v-datepicker>
                     </v-flex>
                     <v-flex xs12 md3>
                         <v-datepicker label="Đến ngày" hide-details v-model="searchParamsDonDatHang.denNgay"
-                                      :min="searchParamsDonDatHang.denNgay" @input="getDataFromApi(searchParamsDonDatHang)"
+                                      :min="searchParamsDonDatHang.tuNgay" @input="getDataFromApi(searchParamsDonDatHang)"
                                       clearable></v-datepicker>
                     </v-flex>
                 </v-layout>
@@ -22,20 +20,19 @@
             <v-layout>
                 <v-flex xs12 md12>
                     <v-radio-group hide-details v-model="searchParamsDonDatHang.tinhTrang" @change="getDataFromApi(searchParamsDonDatHang)" row>
-                        <v-radio label="Tất cả" value="null"></v-radio>
-                        <v-radio label="Giỏ hàng" value="0"></v-radio>
-                        <v-radio label="Đã đặt hàng" value="1"></v-radio>
-                        <v-radio label="Đang xử lý" value="2"></v-radio>
-                        <v-radio label="Hoàn thành" value="4"></v-radio>
-                        <v-radio label="Chưa thanh toán" value="3"></v-radio>
+                        <v-radio label="Tất cả" :value="null"></v-radio>
+                        <v-radio label="Giỏ hàng" :value="0"></v-radio>
+                        <v-radio label="Đã đặt hàng" :value="1"></v-radio>
+                        <v-radio label="Đang xử lý" :value="2"></v-radio>
+                        <v-radio label="Hoàn thành" :value="4"></v-radio>
+                        <v-radio label="Chưa thanh toán" :value="3"></v-radio>
                     </v-radio-group>
                 </v-flex>
             </v-layout>
             <v-flex xs12 sm12 md12 mt-2>
                 <v-data-table :headers="headers"
                               :items="dsDonHang" hide-actions 
-                              @update:pagination="getDataFromApi" :pagination.sync="searchParamsDonDatHang"
-                              :total-items="searchParamsDonDatHang.totalItems"
+                              :pagination.sync="searchParamsDonDatHang"
                               :loading="loadingTable"
                               class="table-border table">
                     <template v-slot:items="props">
@@ -43,8 +40,10 @@
                         <td class="text-xs-center">{{ props.item.soHieuDon === null ? 'Chưa có' : props.item.soHieuDon }}</td>
                         <td class="text-xs-center">{{ props.item.ngayDat | moment("DD/MM/YYYY hh:mm") }}</td>
                         <td class="text-xs-center">{{ props.item.tongTien | currency('', 0,{ thousandsSeparator: '.' }) }}</td>
-                        <td class="text-xs-center">{{ props.item.trangThaiDon }}</td>
-                        <td class="text-xs-center">{{ props.item.carbs }}</td>
+                        <td class="text-xs-center">{{ props.item.tinhTrang == 1 ? 'Chưa nhận' : 
+                              (props.item.tinhTrang == 2 ? 'Đã nhận' : 
+                              (props.item.tinhTrang == 3 ? 'Chưa thanh toán' :
+                              props.item.tinhTrang == 4 ? 'Hoàn thành' : '')) }}</td>                        <td class="text-xs-center">{{ props.item.ghiChu }}</td>
                         <td class="text-xs-center">
                             <v-btn flat color="primary" small class="ma-0" @click="showChiTietDon(props.item.donDatHangID)">
                                 Xem
@@ -149,7 +148,7 @@
                 DonHang: {} as DonDatHang,
                 loadingTable: false,
                 searchParamsChiTietDonDatHang: { includeEntities: true, rowsPerPage: 10 } as ChiTietDonDatHangApiSearchParams,
-                searchParamsDonDatHang: { includeEntities: true, rowsPerPage: 10 } as DonDatHangApiSearchParams,
+                searchParamsDonDatHang: { includeEntities: true, rowsPerPage: 10, tinhTrang: null as any } as DonDatHangApiSearchParams,
                 date: new Date().toISOString().substr(0, 10),
                 menu1: false,
                 modal: false,
@@ -184,13 +183,15 @@
             'donMuaNgay.henLayTu': function (val) {
                 this.thoiGianHenToiThieu = this.$moment(val).add(15, 'm');
             },
-            page: function () {
-                this.searchParamsDonDatHang.page = this.page;
-            }
+            // page: function () {
+            //     this.searchParamsDonDatHang.page = this.page;
+            // }
         },
         created() {
-            this.searchParamsDonDatHang.tinhTrang = 'null' as any;
+            this.searchParamsDonDatHang.tuNgay = this.$moment().startOf('month');
+            this.searchParamsDonDatHang.denNgay = this.$moment().endOf('month');
             this.getDataFromApi(this.searchParamsDonDatHang);
+            //this.getDanhSachToaNha();
         },
         methods: {
             getDataFromApi(searchParamsDonDatHang: DonDatHangApiSearchParams): void {
@@ -198,25 +199,13 @@
                 this.loadingTable = true;
                 DonDatHangApi.search(searchParamsDonDatHang).then(res => {
                     this.tongTien = 0;
-                    this.dsDonHang = res.data;
-                    this.searchParamsDonDatHang.page = (res.pagination.page as any) + 1;
-                    this.searchParamsDonDatHang.totalPages = res.pagination.totalPages;
-                    this.searchParamsDonDatHang.totalItems = res.pagination.totalItems;
-                    res.data.forEach(x => {
+                    this.dsDonHang = res as any;
+                    // this.searchParamsDonDatHang.page = (res.pagination.page as any) + 1;
+                    // this.searchParamsDonDatHang.totalItems = res.pagination.totalItems;
+                    (res as any).forEach( (x : any) => {
                         this.tongTien = this.tongTien + (x as any).tongTien
                     })
                     this.loadingTable = false;
-                });
-            },
-            getDataFromApi1(id: number): void {
-                ChiTietDonDatHangApi.search({ donDatHangID: id, rowsPerPage: 10 }).then(res => {
-                    this.dschiTietDonDat = res.data;
-                    this.loadingTable = false;
-                });
-            },
-            getDataFromApi2(id: number): void {
-                DonDatHangApi.detail(id).then(res => {
-                    this.DonHang = res;
                 });
             },
             showChiTietDon(id: number) {

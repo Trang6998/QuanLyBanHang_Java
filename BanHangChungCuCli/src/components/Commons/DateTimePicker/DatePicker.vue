@@ -34,7 +34,7 @@
     export default Vue.extend({
         props: {
             value: {
-                type: [Date, String],
+                type: [Date, String,Object],
                 default: null
             },
             label: {
@@ -54,11 +54,11 @@
                 default: 'YYYY-MM-DD'
             },
             max: {
-                type: [Date, String],
+                type: [Date, String,Object],
                 default: null
             },
             min: {
-                type: [Date, String],
+                type: [Date, String,Object],
                 default: null
             },
             disabled: {

@@ -79,8 +79,8 @@ import { LoaiSanPham } from '@/models/LoaiSanPham';
             getDataFromApi(searchParamsLoaiSanPham: LoaiSanPhamApiSearchParams): void {
                 searchParamsLoaiSanPham.laDanhMucCha = true;
                 LoaiSanPhamApi.search(searchParamsLoaiSanPham).then(res => {
-                    this.dsLoaiSanPham = res.data;
-                    this.searchParamsLoaiSanPham.totalItems = res.pagination.totalItems;
+                    this.dsLoaiSanPham = res as any;
+                    //this.searchParamsLoaiSanPham.totalItems = res.pagination.totalItems;
                 });
             }
         }

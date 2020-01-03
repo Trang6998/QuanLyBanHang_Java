@@ -2,13 +2,10 @@
     <v-flex xs12>
         <v-breadcrumbs divider="/" class="pa-0">
             <v-icon slot="divider">chevron_right</v-icon>
-            <!--<v-breadcrumbs-item>
-                <v-btn flat class="ma-0" @click="$router.go(-1)" small><v-icon>arrow_back</v-icon> Quay lại</v-btn>
-            </v-breadcrumbs-item>-->
             <v-breadcrumbs-item to="/danh-muc-san-pham" exact>Danh mục</v-breadcrumbs-item>
-            <v-breadcrumbs-item v-if="tenLoaiCha!=null" :to="'/danh-muc-san-pham/' + danhMucChaID">
+            <!-- <v-breadcrumbs-item v-if="tenLoaiCha!=null" :to="'/danh-muc-san-pham/' + danhMucChaID">
                 {{tenLoaiCha}}
-            </v-breadcrumbs-item>
+            </v-breadcrumbs-item> -->
             <v-breadcrumbs-item>
                 <a @click="getDSSanPham(idDanhMucCha)">
                     {{tenDanhMuc}}
@@ -195,7 +192,7 @@
                     if (id === this.idDanhMucCha) {
                         this.tenDanhMuc = res.tenLoai;
                         if ((res as any).danhMucCha !== null) {
-                            this.tenLoaiCha = (res as any).danhMucCha.tenLoai;
+                            this.tenLoaiCha = (res as any).tenLoaiCha;
                             this.danhMucChaID = res.loaiSanPhamPID;
                         }
                     }
@@ -222,13 +219,13 @@
             getDataFromApi(searchParamsSanPham: SanPhamApiSearchParams): void {
                 searchParamsSanPham.layCaDanhMucCon = true;
                 SanPhamApi.search(searchParamsSanPham).then(res => {
-                    this.dsSanPham = res.data;
+                    this.dsSanPham = res as any;
                 });
             },
             getDataDanhMucFromApi(searchParamsLoaiSanPham: LoaiSanPhamApiSearchParams): void {
                 LoaiSanPhamApi.search(searchParamsLoaiSanPham).then(res => {
-                    this.dsLoaiSanPham = res.data;
-                    this.searchParamsLoaiSanPham.totalItems = res.pagination.totalItems;
+                    this.dsLoaiSanPham = res as any;
+                    //this.searchParamsLoaiSanPham.totalItems = res.pagination.totalItems;
                 });
             },
             toggle(index: number) {

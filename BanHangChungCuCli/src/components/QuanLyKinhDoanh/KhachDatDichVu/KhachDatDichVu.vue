@@ -2,18 +2,18 @@
     <v-flex xs12>
         <v-layout row wrap>
             <v-flex xs12><h3>Danh sách khách hàng đặt dịch vụ</h3></v-flex>
-            <v-flex xs12 md4>
+            <v-flex xs12 md3>
                 <v-text-field label="Tìm kiếm" v-model="searchParamsDatDichVu.tenDichVu" @input="getDataFromApi(searchParamsDatDichVu)"></v-text-field>
             </v-flex>
-            <v-flex xs6 md2>
-                <v-datepicker label="Từ ngày" v-model="searchParamsDatDichVu.tuNgay"
-                              :max="searchParamsDatDichVu.tuNgay" @input="getDataFromApi(searchParamsDatDichVu)"></v-datepicker>
+            <v-flex xs6 md3>
+                <v-datetimepicker label="Từ ngày" v-model="searchParamsDatDichVu.tuNgay"
+                              :max="new Date()" @input="getDataFromApi(searchParamsDatDichVu)"></v-datetimepicker>
             </v-flex>
-            <v-flex xs6 md2>
-                <v-datepicker label="Đến ngày" v-model="searchParamsDatDichVu.denNgay"
-                              :min="searchParamsDatDichVu.denNgay" @input="getDataFromApi(searchParamsDatDichVu)"></v-datepicker>
+            <v-flex xs6 md3>
+                <v-datetimepicker label="Đến ngày" v-model="searchParamsDatDichVu.denNgay"
+                              :min="searchParamsDatDichVu.tuNgay" @input="getDataFromApi(searchParamsDatDichVu)"></v-datetimepicker>
             </v-flex>
-            <v-flex xs12 sm4>
+            <v-flex xs12 sm3>
                 <v-select :items="dsToaNha"
                           placeholder="Chọn chung cư"
                           label="Chọn chung cư"
@@ -41,14 +41,14 @@
                     <template slot="items" slot-scope="props">
                         <td>{{ props.index + 1 }}</td>
                         <td>
-                            <span style="white-space: nowrap">{{ props.item.tenHoGiaDinh }}</span>
+                            <span style="white-space: nowrap">{{ props.item.users ? props.item.users.hoTen : '' }}</span>
                             <br />
                             <small style="white-space: nowrap" v-if="props.item.ngayDat != null ">
                                 Ngày đăt: {{ props.item.ngayDat === null ? "" : props.item.ngayDat|moment('DD/MM/YYYY HH:mm') }}
                             </small>
                         </td>
                         <td>{{ props.item.tenPhong }}</td>
-                        <td>{{ props.item.soDienThoai }}</td>
+                        <td>{{ props.item.users ? props.item.users.soDienThoai : '' }}</td>
                         <td>{{ props.item.tenDichVu }}</td>
                         <td>{{ props.item.yeuCau }}</td>
                         <td>{{ props.item.ghiChu }}</td>
@@ -160,17 +160,17 @@
         },
         created() {
             this.searchParamsDatDichVu.tuNgay = this.$moment().startOf('month');
-            this.searchParamsDatDichVu.denNgay = new Date();
-            this.getDanhSachToaNha();
+            this.searchParamsDatDichVu.denNgay = this.$moment().endOf('month');
+            //this.getDanhSachToaNha();
         },
         methods: {
             getDataFromApi(searchParamsDatDichVu: DatDichVuApiSearchParams): void {
                 this.loadingTable = true;
                 DatDichVuApi.search(searchParamsDatDichVu).then(res => {
-                    this.dsDatDichVu = res.data;
-                    this.searchParamsDatDichVu.totalItems = res.pagination.totalItems;
-                    this.searchParamsDatDichVu.page = (res.pagination.page as any) + 1;
-                    this.searchParamsDatDichVu.totalPages = res.pagination.totalPages;
+                    this.dsDatDichVu = res as any;
+                    //this.searchParamsDatDichVu.totalItems = res.pagination.totalItems;
+                    //this.searchParamsDatDichVu.page = (res.pagination.page as any) + 1;
+                    //this.searchParamsDatDichVu.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },
@@ -207,17 +207,17 @@
                     this.$snotify.error('Xóa thất bại!');
                 });
             },
-            getDanhSachToaNha() {
-                HTTP.get('odata/ToaNha').then(res => {
-                    this.dsToaNha.push({
-                        ToaNhaId: null as any,
-                        TenToaNha: 'Tất cả'
-                    } as any);
-                    this.dsToaNha.push(...res.data.value);
-                    this.searchParamsDatDichVu.toaNhaID = this.$store.state.user.User.ToaNhaId;
-                    this.getDataFromApi(this.searchParamsDatDichVu);
-                })
-            },
+            // getDanhSachToaNha() {
+            //     HTTP.get('odata/ToaNha').then(res => {
+            //         this.dsToaNha.push({
+            //             ToaNhaId: null as any,
+            //             TenToaNha: 'Tất cả'
+            //         } as any);
+            //         this.dsToaNha.push(...res.data.value);
+            //         this.searchParamsDatDichVu.toaNhaID = this.$store.state.user.User.ToaNhaId;
+            //         this.getDataFromApi(this.searchParamsDatDichVu);
+            //     })
+            // },
         }
     });
 </script>

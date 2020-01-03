@@ -39,12 +39,10 @@ public class DatDichVu {
 	
 	@ManyToOne
     @JoinColumn(name="userid",nullable = true, insertable = false, updatable = false)	
-	@JsonIgnore
 	private Users users;
 
 	@ManyToOne
 	@JoinColumn(name="dichvuid",nullable = true, insertable = false, updatable = false)
-	@JsonIgnore
 	private DichVu dichVu;
 
 	

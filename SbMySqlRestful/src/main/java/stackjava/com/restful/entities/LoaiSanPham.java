@@ -1,4 +1,5 @@
 package stackjava.com.restful.entities;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.query.criteria.internal.expression.function.AggregationFunction.SUM;
+
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -35,9 +40,30 @@ public class LoaiSanPham {
       @Column(name = "anhdaidien")
 	  private String AnhDaiDien;
 
-
- 	  @OneToMany(mappedBy = "loaiSanPhamCha", cascade = CascadeType.ALL)
-      private List<LoaiSanPham> lstLoaiSanPhamCon;
+      @Transient
+      private Integer SoSanPham;
+      
+      public Integer getSoSanPham() {
+    	  Integer SoSP = 0;
+ 		  if (LoaiSanPhamPID != null)
+ 			  return lstSanPham.size();
+ 		  else {
+ 			  for (LoaiSanPham l : lstLoaiSanPhamCon){
+ 				  SoSP += l.lstSanPham.size();
+ 			  }
+ 			  return SoSP;
+ 		  }
+ 	  }
+    
+      @Transient
+      private String TenLoaiCha;
+      
+      public String getTenLoaiCha() {
+    	  return loaiSanPhamCha != null ? loaiSanPhamCha.TenLoai : "";
+      }
+	  @OneToMany(mappedBy = "loaiSanPhamCha", cascade = CascadeType.ALL)
+	  @JsonIgnore
+      private List<LoaiSanPham> lstLoaiSanPhamCon = new ArrayList<LoaiSanPham>();
 
  	  @ManyToOne
       @JoinColumn(name="loaisanphampid",nullable = true, insertable = false, updatable = false)	
@@ -45,7 +71,8 @@ public class LoaiSanPham {
       private LoaiSanPham loaiSanPhamCha;
 
  	  @OneToMany(mappedBy = "loaiSanPham", cascade = CascadeType.ALL)
-      private List<SanPham> lstSanPham;
+ 	  @JsonIgnore
+      private List<SanPham> lstSanPham = new ArrayList<SanPham>();
 
  	  
 	  public Integer getLoaiSanPhamID() {
@@ -121,12 +148,12 @@ public class LoaiSanPham {
 		  loaiSanPhamCha = LoaiSanPhamCha;
 	  }
 
-	  public List<SanPham> getSanPham() {
-		  return lstSanPham;
-	  }
-
-	  public void setSanPham(List<SanPham> sanPham) {
-		  lstSanPham = sanPham;
-	  }
+//	  public List<SanPham> getSanPham() {
+//		  return lstSanPham;
+//	  }
+//
+//	  public void setSanPham(List<SanPham> sanPham) {
+//		  lstSanPham = sanPham;
+//	  }
 
 }

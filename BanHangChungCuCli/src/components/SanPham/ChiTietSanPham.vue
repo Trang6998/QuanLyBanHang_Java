@@ -251,6 +251,7 @@
                     this.$eventBus.$emit('UpdateGioHang', 0);
                     this.$snotify.success('Thêm vào giỏ hàng thành công!');
                 }).catch(res => {
+                    this.loading = false;
                     this.$snotify.error('Có lỗi xảy ra, vui lòng thử lại!');
                 });
             },
@@ -263,7 +264,7 @@
             getTenDanhMucCha(id: number) {
                 LoaiSanPhamApi.detail(id).then(res => {
                     if ((res as any).danhMucCha !== null) {
-                        this.tenLoaiCha = (res as any).danhMucCha.tenLoai;
+                        this.tenLoaiCha = (res as any).tenLoaiCha;
                         this.danhMucChaID = res.loaiSanPhamPID; 
                     }
                     else

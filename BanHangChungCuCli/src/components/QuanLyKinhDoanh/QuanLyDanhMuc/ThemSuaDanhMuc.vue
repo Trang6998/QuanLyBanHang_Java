@@ -63,7 +63,7 @@
                                                         :items="dsDanhMucCha"
                                                         label="Danh mục cha"
                                                         item-text="tenLoai"
-                                                        item-value="loaiSanPhamid">
+                                                        item-value="loaiSanPhamID">
                                         </v-autocomplete>
                                     </v-flex>
 
@@ -154,7 +154,7 @@
             getDanhMucCha() {
                 this.searchParamsLoaiSanPham.laDanhMucCha = true;
                 LoaiSanPhamApi.search(this.searchParamsLoaiSanPham).then(res => {
-                    this.dsDanhMucCha = res.data;
+                    this.dsDanhMucCha = res as any;
                 });
             },
             save(): void {

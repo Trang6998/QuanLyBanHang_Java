@@ -58,7 +58,7 @@ public class SanPham {
     private Boolean AnHienNhaSanXuat;
 
 	@Column(name = "giaban")
-    private double GiaBan;
+    private Double GiaBan;
 
 	@Column(name = "toanha")
     private String ToaNha;
@@ -76,12 +76,14 @@ public class SanPham {
     private Integer NhaCungCapID;
 
 	@OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<ChiTietDonDatHang> lstChiTietDonDatHang;
 	
 	@OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
     private List<Media> lstMedia;
 	
 	@OneToMany(mappedBy = "sanPham", cascade = CascadeType.ALL)
+	@JsonIgnore
     private List<ThuocTinhSanPham> lstThuocTinhSanPham;
 	
 	@ManyToOne
@@ -106,7 +108,7 @@ public class SanPham {
 
 	public SanPham(Integer loaiSanPhamID, Integer donViTinhID, String kyHieuSanPham, String tenSanPham, String anhSanPham,
 			String moTaNgan, String moTa, String nhaSanXuat, Boolean anHienSanPham, Boolean anHienNhaSanXuat,
-			double giaBan, String toaNha, Integer thuTu, Date ngayDang, Boolean laSanPhamMoi, Integer nhaCungCapID,
+			Double giaBan, String toaNha, Integer thuTu, Date ngayDang, Boolean laSanPhamMoi, Integer nhaCungCapID,
 			List<ChiTietDonDatHang> chiTietDonDatHang, DonViTinh donViTinh,
 			LoaiSanPham loaiSanPham, NhaCungCap nhaCungCap, List<Media> media,
 			List<ThuocTinhSanPham> thuocTinhSanPham) {
@@ -223,11 +225,11 @@ public class SanPham {
 		AnHienNhaSanXuat = anHienNhaSanXuat;
 	}
 
-	public double getGiaBan() {
+	public Double getGiaBan() {
 		return GiaBan;
 	}
 
-	public void setGiaBan(double giaBan) {
+	public void setGiaBan(Double giaBan) {
 		GiaBan = giaBan;
 	}
 
@@ -271,20 +273,20 @@ public class SanPham {
 		NhaCungCapID = nhaCungCapID;
 	}
 
-	public List<ChiTietDonDatHang> getChiTietDonDatHang() {
-		return lstChiTietDonDatHang;
-	}
-
-	public void setChiTietDonDatHang(List<ChiTietDonDatHang> chiTietDonDatHang) {
-		lstChiTietDonDatHang = chiTietDonDatHang;
-	}
+//	public List<ChiTietDonDatHang> getChiTietDonDatHang() {
+//		return lstChiTietDonDatHang;
+//	}
+//
+//	public void setChiTietDonDatHang(List<ChiTietDonDatHang> chiTietDonDatHang) {
+//		lstChiTietDonDatHang = chiTietDonDatHang;
+//	}
 
 	public DonViTinh getDonViTinh() {
 		return donViTinh;
 	}
 
 	public void setDonViTinh(DonViTinh donViTinh) {
-		donViTinh = donViTinh;
+		this.donViTinh = donViTinh;
 	}
 
 	public LoaiSanPham getLoaiSanPham() {

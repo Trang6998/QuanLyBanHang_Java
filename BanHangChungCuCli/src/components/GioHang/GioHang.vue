@@ -18,7 +18,7 @@
                         <v-card style="padding-bottom: 1px">
                             <v-layout nowrap>
                                 <v-flex xs3 sm2>
-                                    <v-img v-if="item.anhSanPham != null" slot="activator"
+                                    <v-img v-if="item.sanPham && item.sanPham.anhSanPham != null" slot="activator"
                                            :src="APIS.HOST + 'fileupload/download?key=' + item.anhSanPham"
                                            style="max-width: 100%;" id="img"
                                            aspect-ratio="1"
@@ -50,7 +50,7 @@
                                     <v-card-title primary-title>
                                         <v-layout nowrap>
                                             <v-flex xs9>
-                                                <div style="font-size: 18px">{{item.tenSanPham}}</div>
+                                                <div style="font-size: 18px">{{item.sanPham ? item.sanPham.tenSanPham : ''}}</div>
                                             </v-flex>
                                             <v-flex xs3>
                                                 <v-layout nowrap>
@@ -227,15 +227,14 @@
             },
             getDataFromApi(): void {
                 DonDatHangApi.getgiohang(this.searchParamsGioHang).then(res => {
-                    this.gioHang = res;
-                    this.lstGioHang = this.gioHang.chiTietGioHang.data;
-                    if (this.gioHang.donDatHangID != 0 && this.gioHang.donDatHangID != null && this.gioHang.donDatHangID != undefined)
-                        this.getDonHang(this.gioHang.donDatHangID);
+                    this.lstGioHang = res as any;
+                    if (this.lstGioHang.length >0 && this.lstGioHang[0].donDatHangID != 0 && this.lstGioHang[0].donDatHangID != null && this.lstGioHang[0].donDatHangID != undefined)
+                        this.getDonHang(this.lstGioHang[0].donDatHangID);
                     else {
                         this.donHang = {} as DonDatHang;
                         (this.donHang as any).tongTien = 0
                     }
-                    this.searchParamsGioHang.totalItems = (res as any).chiTietGioHang.pagination.totalItems;
+                    //this.searchParamsGioHang.totalItems = (res as any).chiTietGioHang.pagination.totalItems;
                 });
             },
             getDonHang(id: number) {

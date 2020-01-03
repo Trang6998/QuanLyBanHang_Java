@@ -20,7 +20,7 @@
                             <v-card style="margin: 5px;" :to="'/dich-vu/' + item.dichVuID">
                                 <v-layout nowrap>
                                     <v-flex xs3>
-                                        <v-img v-if="item.anhDaiDien != null" slot="activator"
+                                        <v-img v-if="item.dichVu.anhDaiDien != null" slot="activator"
                                                :src="APIS.HOST + 'fileupload/download?key=' + item.anhDaiDien"
                                                style="max-width: 100%;" id="img"
                                                aspect-ratio="1"
@@ -51,7 +51,7 @@
                                     <v-flex xs9>
                                         <v-card-title primary-title>
                                             <div style="width: 100%">
-                                                <div class="headline">{{item.tenDichVu}}</div>
+                                                <div class="headline">{{item.dichVu.tenDichVu}}</div>
                                                 <div style="white-space: nowrap; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%;">Yêu cầu dịch vu: {{item.yeuCau}}</div>
                                                 <div style="white-space: nowrap; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 100%;">Ghi chú: {{item.ghiChu}}</div>
                                             </div>
@@ -113,14 +113,15 @@
         watch: {
         },
         created() {
-            this.getDanhSachToaNha();
+            //this.getDanhSachToaNha();
+            this.getDataFromApi(this.searchParamsDatDichVu)
         },
         methods: {
             getDataFromApi(searchParamsDatDichVu: DatDichVuApiSearchParams): void {
                 this.loadingTable = true;
                 DatDichVuApi.search(searchParamsDatDichVu).then(res => {
-                    this.dsDatDichVu = res.data;
-                    this.searchParamsDatDichVu.totalItems = res.pagination.totalItems;
+                    this.dsDatDichVu = res as any;
+                    //this.searchParamsDatDichVu.totalItems = res.pagination.totalItems;
                     this.loadingTable = false;
                 });
             },
@@ -150,17 +151,17 @@
                     this.$snotify.error('Xóa thất bại!');
                 });
             },
-            getDanhSachToaNha() {
-                HTTP.get('odata/ToaNha').then(res => {
-                    this.dsToaNha.push({
-                        ToaNhaId: null as any,
-                        TenToaNha: 'Tất cả'
-                    } as any);
-                    this.dsToaNha.push(...res.data.value);
-                    this.searchParamsDatDichVu.toaNhaID = this.$store.state.user.User.ToaNhaId;
-                    this.getDataFromApi(this.searchParamsDatDichVu);
-                })
-            },
+            // getDanhSachToaNha() {
+            //     HTTP.get('odata/ToaNha').then(res => {
+            //         this.dsToaNha.push({
+            //             ToaNhaId: null as any,
+            //             TenToaNha: 'Tất cả'
+            //         } as any);
+            //         this.dsToaNha.push(...res.data.value);
+            //         this.searchParamsDatDichVu.toaNhaID = this.$store.state.user.User.ToaNhaId;
+            //         this.getDataFromApi(this.searchParamsDatDichVu);
+            //     })
+            // },
         }
     });
 </script>
