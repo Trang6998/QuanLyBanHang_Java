@@ -25,7 +25,7 @@ public class DonDatHangService {
 		return donDatHangRepository.findByProperty(soHieuDon, taiKhoanDatHangID, taiKhoanNhanVienID, tuNgay, denNgay, trangThai);
 	}
 	public List<ChiTietDonDatHang> findByTaiKhoan(Integer taiKhoanDatHangID){
-		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).isPresent() ? donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).get().getChiTietDonDatHangs() : new ArrayList<ChiTietDonDatHang>();
+		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).isPresent() ? donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).get().getLstChiTietDonDatHang() : new ArrayList<ChiTietDonDatHang>();
 	}
 	public DonDatHang getGioHang(Integer taiKhoanDatHangID){
 		return donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).isPresent() ? donDatHangRepository.findByTaiKhoan(taiKhoanDatHangID).get() : new DonDatHang();

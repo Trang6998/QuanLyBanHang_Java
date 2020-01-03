@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import stackjava.com.restful.service.ChiTietDonDatHangService;
 import stackjava.com.restful.service.DonDatHangService;
 import stackjava.com.restful.service.ServiceResult;
 import stackjava.com.restful.entities.ChiTietDonDatHang;
@@ -31,6 +33,8 @@ import stackjava.com.restful.entities.DonDatHang;;
 public class DonDatHangController {
 	@Autowired
 	private DonDatHangService donDatHangService;
+	@Autowired
+	private ChiTietDonDatHangService chiTietDonDatHangService;
     @GetMapping
 	public ResponseEntity getALl(@RequestParam(value = "soHieuDon", required = false) String soHieuDon,
 								 @RequestParam(value = "taiKhoanDatHangID", required = false) Integer taiKhoanDatHangID,
@@ -57,12 +61,17 @@ public class DonDatHangController {
 //    		henlaytu = sdf.parse(donDatHang.hen);
 //    	if(denNgay != null)
 //    		denngay = sdf.parse(denNgay);
+    	ChiTietDonDatHang ct = donDatHang.getLstChiTietDonDatHang().get(0);
     	donDatHangService.save(donDatHang);
     	if (donDatHang.getTinhTrang()==1) {
     		donDatHang.setSoHieuDon("SHĐ" + donDatHang.getDonDatHangID().toString());
     	}
+    	
     	donDatHangService.save(donDatHang);
-        return ResponseEntity.ok(donDatHang);
+    	ct.setDonDatHangID(donDatHang.getDonDatHangID());
+    	chiTietDonDatHangService.save(ct);
+    	
+        return ResponseEntity.ok().build();
     }
     @GetMapping("/gioHang")
     public ResponseEntity<List<ChiTietDonDatHang>> getGioHang(@RequestParam(value = "taiKhoanKhachHangID", required = false) Integer taiKhoanKhachHangID) {

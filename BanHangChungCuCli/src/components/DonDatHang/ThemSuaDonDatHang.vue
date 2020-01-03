@@ -280,7 +280,7 @@
                    if (res) {
                         this.donDatHang.users = undefined;
                         this.donDatHang.users1 = undefined;
-                        this.donDatHang.chiTietDonDatHang = undefined;
+                        this.donDatHang.lstChiTietDonDatHang = undefined;
                         if (this.isUpdate) {
                             let id = parseInt(this.$route.params.id, 10);
                             this.loading = true;

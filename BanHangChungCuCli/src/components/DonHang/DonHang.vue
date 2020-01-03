@@ -218,7 +218,7 @@
             muaNgay() {
                 this.donMuaNgay.ngayDat = this.$moment();
                 this.donMuaNgay.tinhTrang = 1;
-                this.donMuaNgay.chiTietDonDatHang = undefined;
+                this.donMuaNgay.lstChiTietDonDatHang = undefined;
                 DonDatHangApi.update(this.donMuaNgay.donDatHangID, this.donMuaNgay).then(res => {
                     this.$snotify.success('Đặt mua thành công!');
                     this.dialogConfirm = false;

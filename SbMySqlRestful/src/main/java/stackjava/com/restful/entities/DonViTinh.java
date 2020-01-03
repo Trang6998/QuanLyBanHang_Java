@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="donvitinh")
 public class DonViTinh {
@@ -26,6 +28,7 @@ public class DonViTinh {
      private String GhiChu;
 
 	 @OneToMany(mappedBy = "donViTinh", cascade = CascadeType.ALL)
+	 @JsonIgnore
      private List<SanPham> lstSanPham;
 	 
      public DonViTinh() {
@@ -64,12 +67,12 @@ public class DonViTinh {
 		GhiChu = ghiChu;
 	}
 
-	public List<SanPham> getSanPham() {
-		return lstSanPham;
-	}
+//	public List<SanPham> getSanPham() {
+//		return lstSanPham;
+//	}
 
-	public void setSanPham(List<SanPham> sanPham) {
-		lstSanPham = sanPham;
-	}
+//	public void setSanPham(List<SanPham> sanPham) {
+//		lstSanPham = sanPham;
+//	}
 
 }

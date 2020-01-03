@@ -50,7 +50,7 @@
                                         <button class="shopee-button-outline" style="font-size: 18px" @click="thayDoiSoLuong(false)"><v-icon>remove</v-icon></button>
                                         <input class="shopee-button-outline shopee-button-outline-mid" style="font-size: 18px; color: dimgrey" type="number" min="1" v-model="soLuong" />
                                         <button class="shopee-button-outline" style="font-size: 18px" @click="thayDoiSoLuong(true)"><v-icon>add</v-icon></button>
-                                        <div style="font-size: 18px; color: dimgrey">&nbsp;&nbsp;{{sanPham.donViTinh}}</div>
+                                        <div style="font-size: 18px; color: dimgrey">&nbsp;&nbsp;{{sanPham.donViTinh ? sanPham.donViTinh.tenDonVi : ''}}</div>
                                     </div>
                                 </v-flex>
                                 <v-flex xs12>
@@ -185,7 +185,7 @@
                 soLuong: 1,
                 dialogMuaNgay: false,
                 donMuaNgay: {
-                    chiTietDonDatHang: [] as ChiTietDonDatHang[]
+                    lstChiTietDonDatHang: [] as ChiTietDonDatHang[]
                 } as DonDatHang,
                 chiTietDonMuaNgay: {} as ChiTietDonDatHang,
                 thoiGianHenToiThieu: null as any,
@@ -228,14 +228,14 @@
                 this.dialogMuaNgay = false;
             },
             muaNgay() {
-                (this.donMuaNgay.chiTietDonDatHang as ChiTietDonDatHang[]).push(this.chiTietDonMuaNgay);
+                (this.donMuaNgay.lstChiTietDonDatHang as ChiTietDonDatHang[]).push(this.chiTietDonMuaNgay);
                 DonDatHangApi.insert(this.donMuaNgay).then(res => {
                     this.$snotify.success('Đặt mua thành công!');
                     this.dialogMuaNgay = false;
                     this.$eventBus.$emit('UpdateSoDonChuaNhan', 0);
                     (this.$refs.datHangThanhCong as any).show(res as any);
                     this.donMuaNgay = {
-                        chiTietDonDatHang: [] as ChiTietDonDatHang[]
+                        lstChiTietDonDatHang: [] as ChiTietDonDatHang[]
                     } as DonDatHang;
                     this.chiTietDonMuaNgay = {} as ChiTietDonDatHang;
                 });

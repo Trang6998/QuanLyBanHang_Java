@@ -102,8 +102,8 @@ public class SanPhamController {
         if (SanPhamService.findById(id) == null) {
             ResponseEntity.badRequest().build();
         }
-
-        return ResponseEntity.ok(SanPhamService.save(SanPham));
+        SanPhamService.save(SanPham);
+        return ResponseEntity.ok().build();
     }
 
 	@DeleteMapping("/{id}")
