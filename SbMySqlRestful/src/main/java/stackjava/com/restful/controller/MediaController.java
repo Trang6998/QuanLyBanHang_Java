@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import stackjava.com.restful.entities.DonViTinh;
 import stackjava.com.restful.entities.Media;
 import stackjava.com.restful.service.MediaService;
 
@@ -32,6 +34,13 @@ public class MediaController {
 
         return ResponseEntity.ok(mediaService.findByProperty(dichVuID, sanPhamID));
 	}
+    
+    @PostMapping
+    public ResponseEntity create(@Valid @RequestBody Media media) {
+        return ResponseEntity.ok(mediaService.save(media));
+    }
+    
+    
     @PutMapping("/{id}")
     public ResponseEntity<Media> update(@PathVariable int id, @Valid @RequestBody Media media) {
         if (mediaService.findById(id) == null) {
