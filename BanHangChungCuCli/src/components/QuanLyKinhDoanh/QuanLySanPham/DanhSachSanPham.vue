@@ -54,7 +54,7 @@
                             </template>
                         </v-data-table>
                         <div class="text-xs-center pt-2 xxx">
-                            <v-pagination :total-visible="5" @input="getDataFromApi(searchParamsSanPham)" v-model="page" :length="searchParamsSanPham.totalPages"></v-pagination>
+                            <v-pagination :total-visible="5" v-model="page" :length="pages"></v-pagination>
                         </div>
                     </v-flex>
                 </v-layout>
@@ -134,9 +134,8 @@ import { SanPham } from '@/models/SanPham';
                 this.loadingTable = true;
                 SanPhamApi.search(searchParamsSanPham).then(res => {
                     this.dsSanPham = res as any;
-                    //this.searchParamsSanPham.totalItems = res.pagination.totalItems;
+                    this.searchParamsSanPham.totalItems = (res as any).length;
                     //this.searchParamsSanPham.page = (res.pagination.page as any) + 1;
-                    //this.searchParamsSanPham.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

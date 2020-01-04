@@ -49,7 +49,7 @@
 
                 </v-data-table>
                 <div class="text-xs-center pt-2 xxx">
-                    <v-pagination :total-visible="5" @input="getDataFromApi(searchParamsDatDichVu)" v-model="page" :length="searchParamsDatDichVu.totalPages"></v-pagination>
+                    <v-pagination :total-visible="5" v-model="page" :length="pages"></v-pagination>
                 </div>
             </v-flex>
             <v-dialog v-model="dialogConfirmDelete" max-width="290">
@@ -153,9 +153,8 @@
                 this.loadingTable = true;
                 DatDichVuApi.search(searchParamsDatDichVu).then(res => {
                     this.dsDatDichVu = res as any;
-                    //this.searchParamsDatDichVu.totalItems = res.pagination.totalItems;
+                    this.searchParamsDatDichVu.totalItems = (res as any).length;
                     //this.searchParamsDatDichVu.page = (res.pagination.page as any) + 1;
-                    //this.searchParamsDatDichVu.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

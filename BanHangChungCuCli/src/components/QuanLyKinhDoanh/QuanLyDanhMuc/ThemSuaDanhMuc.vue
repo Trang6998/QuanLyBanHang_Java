@@ -192,13 +192,11 @@
             changeImg() {
                 var formData = new FormData()
                 let files = (document as any).querySelector('#FileDM').files[0]
-                debugger
                 var re = /^\w+\.(?:jpg|png|gif|jpeg)$/g
                 if (re.test(files.name)) {
                     formData.append('img', files)
                     HTTP.post('/api/img', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                         .then(res => {
-                            debugger
                             this.danhMuc.anhDaiDien = res.data;
                         })
                 } else {

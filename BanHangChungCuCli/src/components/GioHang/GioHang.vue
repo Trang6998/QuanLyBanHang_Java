@@ -245,6 +245,7 @@
                     this.getDataFromApi();
                     this.dialogConfirm = false;
                     this.$snotify.success('Mua hàng thành công');
+                    this.$eventBus.$emit('UpdateGioHang', 0);
                     this.$eventBus.$emit('UpdateSoDonChuaNhan', 0);
                     (this.$refs.datHangThanhCong as any).show(res as any);
                 }).catch(res => {

@@ -105,7 +105,7 @@
                     </template>
                 </v-data-table>
                 <div class="text-xs-center pt-2 xxx">
-                    <v-pagination :total-visible="5" @input="getDataFromApi(searchParamsDonDatHang)" v-model="page" :length="searchParamsDonDatHang.totalPages"></v-pagination>
+                    <v-pagination :total-visible="5"  v-model="page" :length="pages"></v-pagination>
                 </div>
             </v-flex>
             <tong-hop-don ref="tongHopDon"></tong-hop-don>
@@ -181,9 +181,8 @@
                 this.loadingTable = true;
                 DonDatHangApi.search(searchParamsDonDatHang).then(res => {
                     this.dsDonDatHang = res as any;
-                    // this.searchParamsDonDatHang.totalItems = res.pagination.totalItems;
+                    this.searchParamsDonDatHang.totalItems = (res as any).length;
                     // this.searchParamsDonDatHang.page = (res.pagination.page as any) + 1;
-                    // this.searchParamsDonDatHang.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },
@@ -254,6 +253,6 @@
         color: #000;
         width: auto;
         min-width: 34px;
-        padding: 0 5px;
+        padding-left: 13px!important;
     }
 </style>

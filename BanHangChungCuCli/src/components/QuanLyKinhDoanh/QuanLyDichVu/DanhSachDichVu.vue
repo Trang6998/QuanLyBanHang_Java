@@ -41,7 +41,7 @@
                             </template>
                         </v-data-table>
                         <div class="text-xs-center pt-2 xxx">
-                            <v-pagination :total-visible="5" @input="getDataFromApi(searchParamsDichVu)" v-model="page" :length="searchParamsDichVu.totalPages"></v-pagination>
+                            <v-pagination :total-visible="5"  v-model="page" :length="pages"></v-pagination>
                         </div>
                     </v-flex>
                 </v-layout>
@@ -81,7 +81,7 @@
                     { text: 'Ẩn/Hiện', value: 'trangThai', align: 'center', sortable: false },
                     { text: 'Thao tác', value: '#', align: 'center', sortable: false },
                 ],
-                searchParamsDichVu: { } as DichVuApiSearchParams,
+                searchParamsDichVu: { rowsPerPage: 5 } as DichVuApiSearchParams,
                 loadingTable: false,
                 selectedDichVu: {} as DichVu,
                 dialogConfirmDelete: false,
@@ -90,17 +90,17 @@
             }
         },
         watch: {
-            // page: function () {
-            //     this.searchParamsDichVu.page = this.page;
-            // }
+            page: function () {
+                this.searchParamsDichVu.page = this.page;
+            }
         },
         computed: {
             pages(): number {
-                // if (this.searchParamsDichVu.rowsPerPage == null ||
-                //     this.searchParamsDichVu.totalItems == null
-                // )
+                if (this.searchParamsDichVu.rowsPerPage == null ||
+                    this.searchParamsDichVu.totalItems == null
+                )
                      return 0;
-                // return Math.ceil(this.searchParamsDichVu.totalItems / this.searchParamsDichVu.rowsPerPage);
+                return Math.ceil(this.searchParamsDichVu.totalItems / this.searchParamsDichVu.rowsPerPage);
             }
         },
         created() {
@@ -112,9 +112,8 @@
                 this.loadingTable = true;
                 DichVuApi.search(searchParamsDichVu).then(res => {
                     this.dsDichVu = res as any;
-                    //this.searchParamsDichVu.totalItems = res.pagination.totalItems;
+                    this.searchParamsDichVu.totalItems = (res as any).length;
                     //this.searchParamsDichVu.page = (res.pagination.page as any) + 1;
-                    //this.searchParamsDichVu.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

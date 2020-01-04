@@ -42,7 +42,7 @@
                         </template>
                     </v-data-table>
                     <div class="text-xs-center pt-2 xxx">
-                        <v-pagination :total-visible="5" @input="getDataFromApi(searchParamsNhaCungCap)" v-model="page" :length="searchParamsNhaCungCap.totalPages"></v-pagination>
+                        <v-pagination :total-visible="5" v-model="page" :length="pages"></v-pagination>
                     </div>
                 </v-flex>
             </v-layout>
@@ -110,9 +110,8 @@
                 this.loadingTable = true;
                 NhaCungCapApi.search(searchParamsNhaCungCap).then(res => {
                     this.dsNhaCungCap = res as any;
-                    // this.searchParamsNhaCungCap.totalItems = res.pagination.totalItems;
+                    this.searchParamsNhaCungCap.totalItems = (res as any).length;
                     // this.searchParamsNhaCungCap.page = (res.pagination.page as any) + 1;
-                    // this.searchParamsNhaCungCap.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

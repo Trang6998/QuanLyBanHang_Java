@@ -58,7 +58,7 @@
                             </template>
                         </v-data-table>
                         <div class="text-xs-center pt-2 xxx">
-                            <v-pagination :total-visible="5" @input="getDataFromApi(searchParamsDanhMuc)" v-model="page" :length="searchParamsDanhMuc.totalPages"></v-pagination>
+                            <v-pagination :total-visible="5" v-model="page" :length="pages"></v-pagination>
                         </div>
                     </v-flex>
                 </v-layout>
@@ -97,7 +97,7 @@ import { LoaiSanPham } from '@/models/LoaiSanPham';
                     { text: 'Xem sản phẩm', value: '#', align: 'center', sortable: false },
                     { text: 'Thao tác', value: '#', align: 'center', sortable: false },
                 ],
-                searchParamsDanhMuc: { includeEntities: true, rowsPerPage: 10 } as LoaiSanPhamApiSearchParams,
+                searchParamsDanhMuc: { includeEntities: true, rowsPerPage: 5 } as LoaiSanPhamApiSearchParams,
                 loadingTable: false,
                 selectedDanhMuc: {} as LoaiSanPham,
                 dialogConfirmDelete: false,
@@ -127,9 +127,8 @@ import { LoaiSanPham } from '@/models/LoaiSanPham';
                 this.loadingTable = true;
                 LoaiSanPhamApi.search(searchParamsDanhMuc).then(res => {
                     this.dsDanhMuc = res as any;
-                    //this.searchParamsDanhMuc.totalItems = res.pagination.totalItems;
+                    this.searchParamsDanhMuc.totalItems = (res as any).length;
                     //this.searchParamsDanhMuc.page = (res.pagination.page as any) + 1;
-                    //this.searchParamsDanhMuc.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

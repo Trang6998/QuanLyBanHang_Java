@@ -2,7 +2,7 @@ import { HTTP } from '@/HTTPServices'
 import { PaginatedResponse,Pagination } from './PaginatedResponse'
 import { BaseApi } from './BaseApi'
 import { DichVu } from '@/models/DichVu'
-export interface DichVuApiSearchParams {
+export interface DichVuApiSearchParams extends Pagination{
     tenDichVu?: string;
     trangThai?: boolean;
     toaNhaID?: number;
