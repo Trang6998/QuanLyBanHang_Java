@@ -25,7 +25,7 @@
                                   :loading="loadingTable"
                                   class="table-border table">
                         <template slot="items" slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.maNhaCungCap }}</td>
+                            <td class="text-xs-center">{{ props.index + 1 }}</td>
                             <td class="text-xs-center">{{ props.item.tenNhaCungCap }}</td>
                             <td class="text-xs-center">{{ props.item.diaChi }}</td>
                             <td class="text-xs-center">{{ props.item.soDienThoai }}</td>
@@ -76,7 +76,7 @@
             return {
                 dsNhaCungCap: [] as NhaCungCap[],
                 tableHeader: [
-                    { text: 'Mã NCC', value: 'maNhaCungCap', align: 'center', sortable: false },
+                    { text: 'STT', value: '', align: 'center', sortable: false },
                     { text: 'Tên nhà cung cấp', value: 'tenNhaCungCap', align: 'center', sortable: false },
                     { text: 'Địa chỉ', value: 'diaChi', align: 'center', sortable: false },
                     { text: 'Số điện thoại', value: 'soDienThoai', align: 'center', sortable: false },
@@ -112,10 +112,10 @@
             getDataFromApi(searchParamsNhaCungCap: NhaCungCapApiSearchParams): void {
                 this.loadingTable = true;
                 NhaCungCapApi.search(searchParamsNhaCungCap).then(res => {
-                    this.dsNhaCungCap = res.data;
-                    this.searchParamsNhaCungCap.totalItems = res.pagination.totalItems;
-                    this.searchParamsNhaCungCap.page = (res.pagination.page as any) + 1;
-                    this.searchParamsNhaCungCap.totalPages = res.pagination.totalPages;
+                    this.dsNhaCungCap = res as any;
+                    // this.searchParamsNhaCungCap.totalItems = res.pagination.totalItems;
+                    // this.searchParamsNhaCungCap.page = (res.pagination.page as any) + 1;
+                    // this.searchParamsNhaCungCap.totalPages = res.pagination.totalPages;
                     this.loadingTable = false;
                 });
             },

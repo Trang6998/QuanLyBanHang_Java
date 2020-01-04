@@ -85,8 +85,8 @@
         },
         created() {
             this.getMenu();
-            //this.getSoDonChuaNhan(0);
-            //this.$eventBus.$on('UpdateSoDonChuaNhan', this.getSoDonChuaNhan);
+            this.getSoDonChuaNhan(0);
+            this.$eventBus.$on('UpdateSoDonChuaNhan', this.getSoDonChuaNhan);
 
         },
         computed: {
@@ -103,7 +103,7 @@
             },
             getSoDonChuaNhan(so : number) {
                 DonDatHangApi.search(this.searchParamsDonDatHang).then(res => {
-                    this.tongDonChuaNhan = res.pagination.totalItems;
+                    this.tongDonChuaNhan = (res as any).length;
                 });
             },
             getMenu() {

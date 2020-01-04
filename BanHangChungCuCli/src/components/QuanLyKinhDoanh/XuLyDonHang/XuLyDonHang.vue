@@ -59,10 +59,10 @@
                             <a @click="showCapNhatDonHang(props.item)"> {{ props.item.soHieuDon }}</a>
                         </td>
                         <td>
-                            <span style="white-space: nowrap">{{ props.item.tenKhachHang }}</span>
+                            <span style="white-space: nowrap">{{ props.item.nguoiDat }}</span>
                             <br />
                             <small style="white-space: nowrap">
-                                Phòng: {{ props.item.tenPhong }}
+                                SĐT: {{ props.item.soDienThoai }}
                             </small>
                         </td>
                         <td>{{ props.item.ngayDat === null ? "" : props.item.ngayDat|moment('HH:mm DD/MM/YYYY') }}</td>
@@ -165,7 +165,7 @@
                 dsDonDatHang: [] as DonDatHang[],
                 tableHeader: [
                     { text: 'Số đơn', value: 'soHieuDon', align: 'center', sortable: false },
-                    { text: 'Tên hộ gia đình', value: '#', align: 'center', sortable: false },
+                    { text: 'Người đặt', value: '#', align: 'center', sortable: false },
                     { text: 'Thời gian đặt', value: 'ngayDat', align: 'center', sortable: false },
                     { text: 'Khung giờ nhận', value: '#', align: 'center', sortable: false },
                     { text: 'Tổng(VNĐ)', value: 'tongTien', align: 'center', sortable: false },

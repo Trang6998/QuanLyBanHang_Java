@@ -43,10 +43,11 @@ public class SanPhamController {
 	public ResponseEntity getALl(@RequestParam(value = "tenSanPham", required = false) String tenSanPham,
 								 @RequestParam(value = "toiThieu", required = false) Double toiThieu,
 								 @RequestParam(value = "toiDa", required = false) Double toiDa,
+							     @RequestParam(value = "nhaCungCapID", required = false) Integer nhaCungCapID,
 							     @RequestParam(value = "loaiSanPhamID", required = false) Integer loaiSanPhamID,
 							     @RequestParam(value = "trangThaiAnHien", required = false) Boolean trangThaiAnHien) throws ParseException{
 
-        return ResponseEntity.ok(SanPhamService.findByProperty(tenSanPham, toiThieu, toiDa, loaiSanPhamID, trangThaiAnHien));
+        return ResponseEntity.ok(SanPhamService.findByProperty(tenSanPham, toiThieu, toiDa, nhaCungCapID, loaiSanPhamID, trangThaiAnHien));
 	}
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody SanPham SanPham) {

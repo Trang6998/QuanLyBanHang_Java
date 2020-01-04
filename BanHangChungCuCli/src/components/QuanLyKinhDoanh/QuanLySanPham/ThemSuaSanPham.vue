@@ -110,14 +110,16 @@
                             <v-flex xs12 sm8>
                                 <v-layout row wrap>
                                     <v-flex xs12 sm6>
-                                        <v-autocomplete :items="dsToaNha"
-                                                        label="Chọn chung cư"
-                                                        v-model="sanPham.toaNhaID"
-                                                        item-value="ToaNhaId"
-                                                        item-text="TenToaNha"
-                                                        hide-details></v-autocomplete>
+                                         <v-text-field v-model="sanPham.tenSanPham"
+                                                      label="Tên sản phẩm"
+                                                      type="text"
+                                                      :error-messages="errors.collect('Tên sản phẩm', 'frmAddEdit')"
+                                                      v-validate="'required'"
+                                                      data-vv-scope="frmAddEdit"
+                                                      data-vv-name="Tên sản phẩm"
+                                                      clearable></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm4>
+                                    <v-flex xs12 sm6>
                                         <v-autocomplete v-model="sanPham.loaiSanPhamID"
                                                         label="Danh mục"
                                                         :items="dsDanhMuc"
@@ -130,25 +132,20 @@
                                                         clearable>
                                         </v-autocomplete>
                                     </v-flex>
-                                    <v-flex xs12 sm2>
-                                        <v-text-field v-model="sanPham.thuTu"
-                                                      label="Số thứ tự"
-                                                      type="number"
-                                                      :error-messages="errors.collect('Số thứ tự', 'frmAddEdit')"
-                                                      v-validate="''"
-                                                      data-vv-scope="frmAddEdit"
-                                                      data-vv-name="Số thứ tự"></v-text-field>
+                                    <v-flex xs12 sm6>
+                                        <v-autocomplete v-model="sanPham.nhaCungCapID"
+                                                        label="Nhà cung cấp"
+                                                        :items="dsNhaCungCap"
+                                                        item-text="tenNhaCungCap"
+                                                        item-value="nhaCungCapID"
+                                                        :error-messages="errors.collect('Nhà cung cấp', 'frmAddEdit')"
+                                                        v-validate="'required'"
+                                                        data-vv-scope="frmAddEdit"
+                                                        data-vv-name="Nhà cung cấp"
+                                                        clearable>
+                                        </v-autocomplete>
                                     </v-flex>
-                                    <v-flex xs12 sm8>
-                                        <v-text-field v-model="sanPham.tenSanPham"
-                                                      label="Tên sản phẩm"
-                                                      type="text"
-                                                      :error-messages="errors.collect('Tên sản phẩm', 'frmAddEdit')"
-                                                      v-validate="'required'"
-                                                      data-vv-scope="frmAddEdit"
-                                                      data-vv-name="Tên sản phẩm"
-                                                      clearable></v-text-field>
-                                    </v-flex>
+                                    
                                     <v-flex xs12 sm4>
                                         <v-autocomplete v-model="sanPham.donViTinhID"
                                                         label="Đơn vị tính"
@@ -161,6 +158,16 @@
                                                         data-vv-name="Đơn vị tính"
                                                         clearable>
                                         </v-autocomplete>
+                                    </v-flex>
+                                    
+                                    <v-flex xs12 sm2>
+                                        <v-text-field v-model="sanPham.thuTu"
+                                                      label="Số thứ tự"
+                                                      type="number"
+                                                      :error-messages="errors.collect('Số thứ tự', 'frmAddEdit')"
+                                                      v-validate="''"
+                                                      data-vv-scope="frmAddEdit"
+                                                      data-vv-name="Số thứ tự"></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm4>
                                         <v-text-field v-model="sanPham.kyHieuSanPham"
@@ -229,40 +236,6 @@
                                         </v-btn>
                                     </v-flex>
                                 </v-layout>
-                            </v-flex>
-                            <v-flex xs12>
-                               
-                                <v-layout row wrap>
-                                    <v-flex sm8>
-                                        <v-autocomplete v-model="sanPhamNhaCungCap.nhaCungCapID"
-                                                        label="Nhà cung cấp"
-                                                        :items="dsNhaCungCap"
-                                                        item-text="tenNhaCungCap"
-                                                        item-value="nhaCungCapID"
-                                                        :error-messages="errors.collect('Nhà cung cấp', 'frmAddEdit')"
-                                                        v-validate="''"
-                                                        data-vv-scope="frmAddEdit"
-                                                        data-vv-name="Nhà cung cấp"
-                                                        clearable>
-                                        </v-autocomplete>
-                                    </v-flex>
-                                    <v-flex sm4>
-                                        <v-layout nowrap>
-                                            <v-spacer></v-spacer>
-                                            <v-btn small @click="capNhatNCC()" :disabled="loading" :loading="loading" style="margin-top: auto" color="primary" v-if="isUpdate === true">Cập nhật NCC</v-btn>
-                                        </v-layout>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        <v-textarea rows="2" v-model="sanPhamNhaCungCap.ghiChu"
-                                                    label="Ghi chú nhà cung cấp"
-                                                    :error-messages="errors.collect('Ghi chú', 'frmAddEdit')"
-                                                    v-validate="''"
-                                                    data-vv-scope="frmAddEdit"
-                                                    data-vv-name="Ghi chú">
-                                        </v-textarea>
-                                    </v-flex>
-                                </v-layout>
-
                             </v-flex>
                             <v-flex xs12>
                                 <h3>Nội dung mô tả sản phẩm:</h3>
@@ -371,13 +344,10 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                 dsSanPhamNhaCungCap: [] as SanPhamNhaCungCap[],
                 dsSanPhamNhaCungCapLoading: false,
                 searchSanPhamNhaCungCap: '',
-                searchParamsSanPhamNhaCungCap: { includeEntities: true, rowsPerPage: 5 } as SanPhamNhaCungCapApiSearchParams,
                 dsNhaCungCap: [] as NhaCungCap[],
                 searchParamsNhaCungCap: { includeEntities: true, rowsPerPage: 0 } as NhaCungCapApiSearchParams,
-                selectedSanPhamNCC: {} as SanPhamNhaCungCap,
                 dialogConfirmDelete: false,
                 dsToaNha: [] as any,
-                sanPhamNhaCungCap: {} as SanPhamNhaCungCap,
                 daCoNCC: false
             }
         },
@@ -394,12 +364,10 @@ import { NhaCungCap } from '@/models/NhaCungCap';
             show(isUpdate: boolean, item: SanPham) {
                 this.dialog = true;
                 this.getDanhMuc();
-                this.getDpnVi();
-                this.getDanhSachToaNha();
+                this.getDonVi();
                 this.getNhaCungCap();
                 this.$validator.errors.clear("frmAddEdit");
                 this.isUpdate = isUpdate;
-                this.sanPhamNhaCungCap = {} as SanPhamNhaCungCap;
                 if (this.isUpdate !== true) {
                     this.sanPham = {
                         anhSanPham: null as any,
@@ -414,8 +382,6 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                 }
                 else {
                     this.sanPhamID = item.sanPhamID;
-                    this.searchParamsSanPhamNhaCungCap.sanPhamID = this.sanPhamID;
-                    this.getDanhSachNCC(this.searchParamsSanPhamNhaCungCap);
                     this.getDataFromApi(this.sanPhamID);
                 }
             },
@@ -425,20 +391,6 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                     this.sanPham = res;
                     this.itemsAnh = res.media;
                     this.soThuocTinh = (res.thuocTinhSanPham as any).length;
-                });
-            },
-            getDanhSachNCC(searchParamsSanPhamNhaCungCap: SanPhamNhaCungCapApiSearchParams) {
-                this.dsSanPhamNhaCungCapLoading = true;
-                SanPhamNhaCungCapApi.search(searchParamsSanPhamNhaCungCap).then(res => {
-                    if (res.data.length !== 0) {
-                        this.daCoNCC = true;
-                        this.sanPhamNhaCungCap = res.data[0];
-                    }
-                    else {
-                        this.daCoNCC = false
-                        this.sanPhamNhaCungCap = {} as SanPhamNhaCungCap;
-                    }
-                    this.dsSanPhamNhaCungCapLoading = false;
                 });
             },
             hide() {
@@ -459,31 +411,6 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                     MediaApi.delete(media.sanPhamID).then(res => { });
                 }
             },
-            capNhatNCC() {
-                this.sanPhamNhaCungCap.sanPhamID = this.sanPham.sanPhamID;
-                if (this.daCoNCC) {
-                    this.loading = true;
-                    SanPhamNhaCungCapApi.update(this.sanPhamNhaCungCap.sanPhamNhaCungCapID, this.sanPhamNhaCungCap).then(res => {
-                        this.loading = false;
-                        this.$snotify.success('Cập nhật thành công!');
-                    }).catch(res => {
-                        this.loading = false;
-                        this.$snotify.error('Cập nhật thất bại!');
-                    });
-                }
-                else {
-                    this.loading = true;
-                    SanPhamNhaCungCapApi.insert(this.sanPhamNhaCungCap).then(res => {
-                        this.sanPhamNhaCungCap = res;
-                        this.isUpdate = true;
-                        this.loading = false;
-                        this.$snotify.success('Thêm mới thành công!');
-                    }).catch(res => {
-                        this.loading = false;
-                        this.$snotify.error('Thêm mới thất bại!');
-                    });
-                }
-            },
             showModalThemThuocTinh() {
                 (this.$refs.themSuaThuocTinhSanPham as any).show(this.sanPhamID);
             },
@@ -493,7 +420,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                     this.dsDanhMuc=res as any;
                 });
             },
-            getDpnVi(){
+            getDonVi(){
                 var DonViTinhApiSearchParams = {} as DonViTinhApiSearchParams;
                 DonViTinhApi.search(DonViTinhApiSearchParams).then(res => {
                     this.dsDonVi=res as any;
@@ -522,12 +449,9 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                             });
                         } else {
                             this.loading = true;
-                            (this.sanPham.sanPhamNhaCungCap as SanPhamNhaCungCap[]).push(this.sanPhamNhaCungCap);
                             this.sanPham.ngayDang = new Date();
                             SanPhamApi.insert(this.sanPham).then(res => {
                                 this.$emit("getData");
-                                this.searchParamsSanPhamNhaCungCap.sanPhamID = res.sanPhamID;
-                                this.getDanhSachNCC(this.searchParamsSanPhamNhaCungCap);
                                 this.sanPham = res;
                                 this.sanPhamID = res.sanPhamID;
                                 this.isUpdate = true;
@@ -543,7 +467,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
             },
             getNhaCungCap() {
                 NhaCungCapApi.search(this.searchParamsNhaCungCap).then(res => {
-                    this.dsNhaCungCap = res.data;
+                    this.dsNhaCungCap = res as any;
                 });
             },
             changeImg() {
@@ -581,31 +505,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                 } else {
                     this.$snotify.error('Tên file chỉ chứa ký tự chữ, số và dấu "_"');
                 }
-            },
-            confirmDelete(sanPhamNCC: SanPhamNhaCungCap): void {
-                this.selectedSanPhamNCC = sanPhamNCC;
-                this.dialogConfirmDelete = true;
-            },
-            deleteSanPham(): void {
-                SanPhamNhaCungCapApi.delete(this.selectedSanPhamNCC.sanPhamNhaCungCapID).then(res => {
-                    this.$snotify.success('Xóa thành công!');
-                    this.searchParamsSanPhamNhaCungCap.sanPhamID = this.sanPhamID;
-                    this.getDanhSachNCC(this.searchParamsSanPhamNhaCungCap);
-                    this.dialogConfirmDelete = false;
-                }).catch(res => {
-                    this.$snotify.error("Thao tác thất bại");
-                });
-            },
-            getDanhSachToaNha() {
-                // HTTP.get('odata/ToaNha').then(res => {
-                //     this.dsToaNha.push({
-                //         ToaNhaId: null as any,
-                //         TenToaNha: 'Tất cả'
-                //     } as any);
-                //     this.dsToaNha.push(...res.data.value);
-                //     this.sanPham.toaNhaID = this.$store.state.user.User.ToaNhaId;
-                // })
-            },
+            }
         }
     });
 </script>

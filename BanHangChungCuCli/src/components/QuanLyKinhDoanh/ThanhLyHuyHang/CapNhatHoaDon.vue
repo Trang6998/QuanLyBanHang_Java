@@ -322,7 +322,7 @@ import SanPhamApi, { SanPhamApiSearchParams } from '@/apiResources/SanPhamApi';
                             });
                         } else {
                             this.loading = true;
-                            DonDatHangApi.insert(this.hoaDon).then(res => {
+                            DonDatHangApi.insert(null as any,null as any,null as any,this.hoaDon).then(res => {
                                 this.$emit("getData");
                                 this.hoaDon = res;
                                 this.hoaDonID = res.donDatHangID;

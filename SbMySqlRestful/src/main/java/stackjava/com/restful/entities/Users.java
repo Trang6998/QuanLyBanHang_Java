@@ -23,46 +23,46 @@ public class Users {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "userid")
-	public Integer UserId;
+	private Integer UserId;
 	
 	@Column(name = "ngaylap")
-    public Date NgayLap;
+	private Date NgayLap;
 
 	@Column(name = "hoten")
-    public String HoTen;
+	private String HoTen;
 
 	@Column(name = "email")
-    public String Email;
+	private String Email;
 
 	@Column(name = "ghichu")
-    public String GhiChu;
+	private String GhiChu;
 
 	@Column(name = "diachi")
-    public String DiaChi;
+	private String DiaChi;
 
 	@Column(name = "loaiuser")
-    public Integer LoaiUser;
+	private Integer LoaiUser;
 
 	@Column(name = "password")
-    public String PassWord;
+	private String PassWord;
 
 	@Column(name = "taikhoan")
-    public String TaiKhoan;
+	private String TaiKhoan;
 
 	@Column(name = "sodienthoai")
-    public String SoDienThoai;
+	private String SoDienThoai;
 
 	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	@JsonIgnore
-	public List<DatDichVu> lstDatDichVu;
+	private List<DatDichVu> lstDatDichVu;
 	
 	@OneToMany(mappedBy = "userDatHang", cascade = CascadeType.ALL)
 	@JsonIgnore
-    public List<DonDatHang> lstDonDatHang;
+	private List<DonDatHang> lstDonDatHang;
 
 	@OneToMany(mappedBy = "userNhanVien", cascade = CascadeType.ALL)
 	@JsonIgnore
-    public List<DonDatHang> lstDonDatHang1;
+	private List<DonDatHang> lstDonDatHang1;
 	
     public Users() {
 		super();

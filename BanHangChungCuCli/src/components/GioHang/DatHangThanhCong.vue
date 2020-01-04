@@ -50,7 +50,7 @@
                                                 </v-img>
                                             </v-flex>
                                             <v-flex sm8>
-                                                <div>{{ props.item.tenSanPham }}</div>
+                                                <div>{{ props.item.sanPham ? props.item.sanPham.tenSanPham : "" }}</div>
                                             </v-flex>
                                         </v-layout>
                                     </td>

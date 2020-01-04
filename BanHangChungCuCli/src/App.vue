@@ -87,8 +87,8 @@
             },
         },
         created() {
-            //this.getSoLuongSanPham(0);
-            //this.$eventBus.$on('UpdateGioHang', this.getSoLuongSanPham);
+            this.getSoLuongSanPham(0);
+            this.$eventBus.$on('UpdateGioHang', this.getSoLuongSanPham);
         },
         mounted() {
         },
@@ -103,7 +103,7 @@
             },
             getSoLuongSanPham(so: number) {
                 DonDatHangApi.getgiohang(this.searchParamsDonDatHang).then(res => {
-                    this.soLuong = ((res as any).chiTietGioHang as any).pagination.totalItems;
+                    this.soLuong = (res as any).length;
                 });
             },
             logout() {
