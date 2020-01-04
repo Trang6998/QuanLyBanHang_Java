@@ -19,7 +19,7 @@
                             <v-layout nowrap>
                                 <v-flex xs3 sm2>
                                     <v-img v-if="item.sanPham && item.sanPham.anhSanPham != null" slot="activator"
-                                           :src="APIS.HOST + 'fileupload/download?key=' + item.anhSanPham"
+                                           :src="item.anhSanPham"
                                            style="max-width: 100%;" id="img"
                                            aspect-ratio="1"
                                            class="grey lighten-2">

@@ -22,7 +22,7 @@
                                         <v-layout nowrap style="min-width: 200px">
                                             <v-flex sm4>
                                                 <v-img v-if="props.item.anhSanPham != null" slot="activator"
-                                                       :src="APIS.HOST + 'fileupload/download?key=' + props.item.anhSanPham"
+                                                       :src="props.item.anhSanPham"
                                                        style="max-width: 100%;" id="img"
                                                        aspect-ratio="1"
                                                        class="grey lighten-2">
