@@ -76,7 +76,7 @@
                     <div class="_2aZyWI">
                         <div class="kIo6pj" v-for="(item,i) in sanPham.thuocTinhSanPham" :key="i">
                             <label class="_1ymsZN">
-                                {{item.tenThuocTinh}}
+                                {{item.thuocTinh ? item.thuocTinh.tenThuocTinh : ""}}
                             </label>
                             <div>{{item.noiDungMoTa}}</div>
                         </div>

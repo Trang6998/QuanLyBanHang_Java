@@ -41,7 +41,6 @@ public class ThuocTinhSanPham {
 
 	@ManyToOne
     @JoinColumn(name="thuoctinhid",nullable = true, insertable = false, updatable = false)	
-	@JsonIgnore
     private ThuocTinh thuocTinh;
 	
     public ThuocTinhSanPham() {

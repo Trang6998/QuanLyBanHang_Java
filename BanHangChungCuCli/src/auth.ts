@@ -31,6 +31,8 @@ export default {
     login(creds: any, redirect: any) {
         let promise = new Promise((resolve, reject) => {
             axios.post(LOGIN_URL, creds).then((response: any) => {
+                debugger
+                console.log(response)
                 if (response.data === 'Login failed!') {
                     reject(response.data);
                     return;
@@ -72,10 +74,10 @@ export default {
      * @return {void}
      */
     setAuthHeader(request: any) {
-        request.headers.set('access_token', store.state.auth.accessToken);
+        //request.headers.set('access_token', store.state.auth.accessToken);
         // The demo Oauth2 server we are using requires this param, but normally you only set the header.
         /* eslint-disable camelcase */
-        request.params.access_token = store.state.auth.accessToken;
+        //request.params.access_token = store.state.auth.accessToken;
     },
 
     /**

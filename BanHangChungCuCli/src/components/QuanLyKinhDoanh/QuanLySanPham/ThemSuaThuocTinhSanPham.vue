@@ -59,7 +59,7 @@
                                           class="table-border table">
                                 <template slot="items" slot-scope="props">
                                     <td>{{ props.index+1 }}</td>
-                                    <td>{{ props.item.tenThuocTinh }}</td>
+                                    <td>{{ props.item.thuocTinh ? props.item.thuocTinh.tenThuocTinh :"" }}</td>
                                     <td>{{ props.item.noiDungMoTa }}</td>
                                     <td class="text-xs-center" style="width:80px;">
                                         <v-btn flat icon small class="ma-0" @click="ganBien(props.item)">
@@ -163,15 +163,15 @@
             getDataFromApi(searchParamsThuocTinhSanPham: ThuocTinhSanPhamApiSearchParams): void {
                 searchParamsThuocTinhSanPham.sanPhamID = this.sanPhamID;
                 ThuocTinhSanPhamApi.search(this.searchParamsThuocTinhSanPham).then(res => {
-                    this.searchParamsThuocTinhSanPham.totalItems = res.pagination.totalItems;
-                    this.searchParamsThuocTinhSanPham.page = (res.pagination.page as any) + 1;
-                    this.searchParamsThuocTinhSanPham.totalPages = res.pagination.totalPages;
-                    this.dsThuocTinhSanPham = res.data;
+                    // this.searchParamsThuocTinhSanPham.totalItems = res.pagination.totalItems;
+                    // this.searchParamsThuocTinhSanPham.page = (res.pagination.page as any) + 1;
+                    // this.searchParamsThuocTinhSanPham.totalPages = res.pagination.totalPages;
+                    this.dsThuocTinhSanPham = res as any;
                 });
             },
             getThuocTinh() {
                 ThuocTinhApi.search(this.searchParamsThuocTinh).then(res => {
-                    this.dsThuocTinh = res.data;
+                    this.dsThuocTinh = res as any;
                 });
             },
             hide() {

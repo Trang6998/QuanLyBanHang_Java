@@ -6,7 +6,7 @@
                 <v-card class="elevation-12">
                     <v-card-text>
                         <v-form>
-                            <v-text-field v-model="credentials.username"
+                            <v-text-field v-model="credentials.taiKhoan"
                                           @keypress.enter="submit"
                                           prepend-icon="person"
                                           label="Tài khoản"
@@ -16,7 +16,7 @@
                                           data-vv-scope="formLogin"
                                           v-validate="'required'"
                                           required></v-text-field>
-                            <v-text-field v-model="credentials.password"
+                            <v-text-field v-model="credentials.passWord"
                                           :append-icon="show1 ? 'visibility' : 'visibility_off'"
                                           :type="show1 ? 'text' : 'password'"
                                           @click:append="show1 = !show1"
@@ -56,9 +56,9 @@
         return {
             show1: false,
             credentials: {
-                username: '',
+                taiKhoan: '',
                 remember: false,
-                password: ''
+                passWord: ''
             },
             loggingIn: false,
             msg: '',

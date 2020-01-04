@@ -1,4 +1,3 @@
-@@ -0,0 +1,178 @@
 <template>
     <v-app>
         <left-side-bar v-if="isLogin"></left-side-bar>
@@ -80,10 +79,7 @@
         },
         computed: {
             isLogin(): boolean {
-                // return this.$store.state.user
-                //     && this.$store.state.user.Token
-                //     && this.$store.state.user.Token.IsAuthenticated;
-                return true;
+                return this.$store.state.user.Token.IsAuthenticated;
             },
         },
         created() {

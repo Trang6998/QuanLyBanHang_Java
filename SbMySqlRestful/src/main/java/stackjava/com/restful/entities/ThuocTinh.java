@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="thuoctinh")
 public class ThuocTinh {
@@ -30,6 +32,7 @@ public class ThuocTinh {
 
 
 	@OneToMany(mappedBy = "thuocTinh", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<ThuocTinhSanPham> lstThuocTinhSanPham;
 	
 	public ThuocTinh() {
@@ -68,12 +71,12 @@ public class ThuocTinh {
 		GhiChu = ghiChu;
 	}
 
-	public List<ThuocTinhSanPham> getThuocTinhSanPham() {
-		return lstThuocTinhSanPham;
-	}
-
-	public void setThuocTinhSanPham(List<ThuocTinhSanPham> thuocTinhSanPham) {
-		lstThuocTinhSanPham = thuocTinhSanPham;
-	}
+//	public List<ThuocTinhSanPham> getThuocTinhSanPham() {
+//		return lstThuocTinhSanPham;
+//	}
+//
+//	public void setThuocTinhSanPham(List<ThuocTinhSanPham> thuocTinhSanPham) {
+//		lstThuocTinhSanPham = thuocTinhSanPham;
+//	}
 
 }
