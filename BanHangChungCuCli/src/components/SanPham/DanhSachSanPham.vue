@@ -19,7 +19,7 @@
                     <v-flex :key="index" :class="item.active? 'active' : ''" style="height: 100%;cursor: pointer; text-align: center; max-width: 107px" @click="getDSSanPham(item.loaiSanPhamID, index)">
                         <v-avatar style="margin-top: 10px">
                             <v-img v-if="item.anhDaiDien != null" slot="activator"
-                                   :src="APIS.HOST + 'fileupload/download?key=' + item.anhDaiDien"
+                                   :src="item.anhDaiDien"
                                    style="width: 60px!important; height: 60px!important" :id="'img2_' + item.loaiSanPhamID"
                                    aspect-ratio="1"
                                    class="grey lighten-2">
@@ -79,7 +79,7 @@
                             <v-layout row wrap>
                                 <v-flex style="padding: 0px!important">
                                     <v-img v-if="item.anhSanPham != null" slot="activator"
-                                           :src="APIS.HOST + 'fileupload/download?key=' + item.anhSanPham"
+                                           :src="item.anhSanPham"
                                            style="max-width: 100%;" id="img"
                                            aspect-ratio="1"
                                            class="grey lighten-2">

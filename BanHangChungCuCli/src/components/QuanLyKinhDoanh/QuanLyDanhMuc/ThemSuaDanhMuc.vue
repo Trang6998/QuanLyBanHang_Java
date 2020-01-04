@@ -13,7 +13,7 @@
                             <v-flex xs4>
                                 <v-tooltip bottom>
                                     <v-img v-if="danhMuc.anhDaiDien != null" slot="activator"
-                                           :src="APIS.HOST + 'fileupload/download?key=' + danhMuc.anhDaiDien"
+                                           :src="danhMuc.anhDaiDien"
                                            @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
                                            aspect-ratio="1"
                                            class="grey lighten-2">
@@ -195,7 +195,7 @@
                 var re = /^\w+\.(?:jpg|png|gif|jpeg)$/g
                 if (re.test(files.name)) {
                     formData.append('img', files)
-                    HTTP.post('/img', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                    HTTP.post('/api/img', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                         .then(res => {
                             this.danhMuc.anhDaiDien = res.data;
                         })

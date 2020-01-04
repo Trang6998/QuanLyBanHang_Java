@@ -19,7 +19,7 @@
                     <v-layout nowrap>
                         <v-flex xs4>
                             <v-img v-if="item.anhDaiDien != null" slot="activator"
-                                   :src="APIS.HOST + 'fileupload/download?key=' + item.anhDaiDien"
+                                   :src="item.anhDaiDien"
                                    style="max-width: 100%;" id="img"
                                    aspect-ratio="1"
                                    class="grey lighten-2">

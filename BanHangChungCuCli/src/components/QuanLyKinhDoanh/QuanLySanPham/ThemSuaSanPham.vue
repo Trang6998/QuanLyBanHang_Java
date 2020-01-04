@@ -15,7 +15,7 @@
                                     <v-flex xs12>
                                         <v-tooltip bottom>
                                             <v-img v-if="sanPham.anhSanPham != null" slot="activator"
-                                                   :src="APIS.HOST + 'fileupload/download?key=' + sanPham.anhSanPham"
+                                                   :src="sanPham.anhSanPham"
                                                    @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
                                                    aspect-ratio="1"
                                                    class="grey lighten-2">
@@ -65,7 +65,7 @@
                                                 <v-flex xs3>
                                                     <v-card style="position:relative" class="wrapper">
                                                         <v-img @click="ganAnhDaiDien(props.item.duongLink)" v-if="props.item.duongLink != null"
-                                                               :src="APIS.HOST + 'fileupload/download?key=' + props.item.duongLink"
+                                                               :src="props.item.duongLink"
                                                                aspect-ratio="1"
                                                                class="grey lighten-2">
                                                             <template v-slot:placeholder>

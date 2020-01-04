@@ -19,7 +19,7 @@
                         <v-carousel style="max-height: 400px">
                             <v-carousel-item v-for="(item,i) in sanPham.media"
                                              :key="i" style="max-height: 400px"
-                                             :src="APIS.HOST + 'fileupload/download?key=' + item.duongLink"
+                                             :src="item.duongLink"
                                              aspect-ratio="1" class="grey lighten-2">
                             </v-carousel-item>
                         </v-carousel>

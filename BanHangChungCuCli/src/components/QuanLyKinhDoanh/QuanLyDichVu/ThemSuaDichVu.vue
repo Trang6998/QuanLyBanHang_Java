@@ -29,7 +29,7 @@
                                         <!-- <v-tooltip bottom>
                                           
                                             <v-img v-if="dichVu.anhDaiDien != null" slot="activator"
-                                                   :src="APIS.HOST + 'fileupload/download?key=' + dichVu.anhDaiDien"
+                                                   :src="dichVu.anhDaiDien"
                                                    @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
                                                    aspect-ratio="1"
                                                    class="grey lighten-2">
@@ -79,7 +79,7 @@
                                                 <v-flex xs3>
                                                     <v-card style="position:relative" class="wrapper">
                                                         <v-img @click="ganAnhDaiDien(props.item.duongLink)"  v-if="props.item.duongLink != null"
-                                                               :src="APIS.HOST + 'fileupload/download?key=' + props.item.duongLink"
+                                                               :src="props.item.duongLink"
                                                                aspect-ratio="1"
                                                                class="grey lighten-2">
                                                             <template v-slot:placeholder>
@@ -324,7 +324,7 @@ import MediaApi from '@/apiResources/MediaApi';
                     HTTP.post('/api/img', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                         .then(res => {
                             // console.log(res)
-                            let url = APIS.HOST + 'fileupload/download?key=' + res.data
+                            let url = res.data
                             Editor.insertEmbed(cursorLocation, 'image', url)
                         })
                 } else {
