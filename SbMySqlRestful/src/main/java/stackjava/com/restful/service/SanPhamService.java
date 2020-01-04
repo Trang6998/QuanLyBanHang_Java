@@ -21,8 +21,8 @@ public class SanPhamService {
 		return sanPhamRepository.findAll();
 	}
 
-	public List<SanPham> findByProperty(String tenSanPham, Double toiThieu, Double toiDa, Integer loaiSanPhamID, Boolean trangThaiAnHien){
-		return sanPhamRepository.findByProperty(tenSanPham, toiThieu, toiDa, loaiSanPhamID, trangThaiAnHien);
+	public List<SanPham> findByProperty(String tenSanPham, Double toiThieu, Double toiDa, Integer nhaCungCapID, Integer loaiSanPhamID, Boolean trangThaiAnHien){
+		return sanPhamRepository.findByProperty(tenSanPham, toiThieu, toiDa,nhaCungCapID, loaiSanPhamID, trangThaiAnHien);
 	}
 	public Optional<SanPham> findById(int id){
 		return sanPhamRepository.findById(id);

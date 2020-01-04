@@ -7,8 +7,8 @@
                         <h3>Danh sách sản phẩm</h3>
                     </v-flex>
                     <v-flex xs12>
-                        <v-layout row wrap>
-                            <v-flex xs12 md4>
+                        <v-layout nowrap>
+                            <v-flex xs12 md6>
                                 <v-text-field label="Tìm kiếm" v-model="searchParamsSanPham.tenSanPham" @input="getDataFromApi(searchParamsSanPham)" ma-0 pa-0></v-text-field>
                             </v-flex>
                             <v-flex xs6 md4>
@@ -21,21 +21,8 @@
                                                 @input="getDataFromApi(searchParamsSanPham)">
                                 </v-autocomplete>
                             </v-flex>
-                            <v-flex xs6 md4>
-                                <v-autocomplete :items="dsToaNha"
-                                                placeholder="Chọn chung cư"
-                                                label="Chọn chung cư"
-                                                v-model="searchParamsSanPham.toaNhaID"
-                                                @change="getDataFromApi(searchParamsSanPham)"
-                                                item-value="ToaNhaId"
-                                                item-text="TenToaNha"></v-autocomplete>
-                            </v-flex>
-                            <v-flex xs12>
-                                <v-layout norwap>
-                                    <v-spacer></v-spacer>
-                                    <v-btn small @click="showModalThemSuaSanPham(false,{anhSanPham: null})" style="margin-top: auto" color="primary">Thêm sản phẩm</v-btn>
-                                </v-layout>
-                            </v-flex>
+                            <v-spacer></v-spacer>
+                            <v-btn small @click="showModalThemSuaSanPham(false,{anhSanPham: null})" color="primary">Thêm sản phẩm</v-btn>
                         </v-layout>
                     </v-flex>
                     <v-flex xs12>
@@ -51,8 +38,8 @@
                                 <td>{{ props.item.tenLoai }}</td>
                                 <!--<td>{{ props.item.soLuong }}</td>-->
                                 <td>{{ props.item.giaBan | currency('', 0,{ thousandsSeparator: '.' })}}</td>
-                                <td>{{ props.item.donViTinh ? props.item.donViTinh.tenDonVi : "" }}</td>
-                                <td>{{ props.item.nhaCungCap }}</td>
+                                <td>{{ props.item.tenDonViTinh }}</td>
+                                <td>{{ props.item.tenNhaCungCap  }}</td>
                                 <td class="text-xs-center text-nowrap" style="width:100px;white-space: nowrap">
                                     <v-btn icon small class="ma-0" @click="showModalThemSuaSanPham(true,props.item)">
                                         <v-icon small color="teal">edit</v-icon>
@@ -139,7 +126,6 @@ import { SanPham } from '@/models/SanPham';
             }
         },
         created() {
-            this.getDanhSachToaNha();
             this.getDanhMuc();
             this.getDataFromApi(this.searchParamsSanPham);
         },
@@ -180,17 +166,7 @@ import { SanPham } from '@/models/SanPham';
                 }).catch(res => {
                     this.$snotify.error(res.response.data.message);
                 });
-            },
-            getDanhSachToaNha() {
-                HTTP.get('odata/ToaNha').then(res => {
-                    this.dsToaNha.push({
-                        ToaNhaId: null as any,
-                        TenToaNha: 'Tất cả'
-                    } as any);
-                    this.dsToaNha.push(...res.data.value);
-                    this.searchParamsSanPham.toaNhaID = this.$store.state.user.User.ToaNhaId;
-                })
-            },
+            }
         }
     });
 </script>

@@ -4,6 +4,7 @@ import { PaginatedResponse,Pagination } from './PaginatedResponse'
 import { SanPham } from '@/models/SanPham'
 export interface SanPhamApiSearchParams extends Pagination {
     loaiSanPhamID?:number;
+    nhaCungCapID?:number;
     tenSanPham?: string;
     trangThaiAnHien?: boolean;
     toaNhaID?: number;

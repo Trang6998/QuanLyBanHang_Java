@@ -20,6 +20,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
 	 			   + "WHERE (sp.TenSanPham like CONCAT('%',:tenSanPham,'%') OR :tenSanPham is NULL) "
 	 			   + "AND (sp.GiaBan >= :toiThieu OR :toiThieu is NULL) "
 	 			   + "AND (sp.GiaBan <= :toiDa OR :toiDa is NULL) "
+	 			   + "AND (sp.NhaCungCapID = :nhaCungCapID OR :nhaCungCapID is NULL) "
 	 			   + "AND (lspc.LoaiSanPhamID = :loaiSanPhamID "
 	 			   		+ "OR lsp.LoaiSanPhamID = :loaiSanPhamID "
 	 			   		+ "OR :loaiSanPhamID is NULL) "
@@ -27,6 +28,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Integer> {
      public List<SanPham> findByProperty( @Param("tenSanPham") String tenSanPham,
     		 										@Param("toiThieu") Double toiThieu,
     		 										@Param("toiDa") Double toiDa,
+    		 										@Param("nhaCungCapID") Integer nhaCungCapID,
     		 										@Param("loaiSanPhamID") Integer loaiSanPhamID,
     		 										@Param("trangThaiAnHien") Boolean trangThaiAnHien);
 	

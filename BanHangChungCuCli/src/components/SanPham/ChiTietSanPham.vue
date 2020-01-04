@@ -229,7 +229,7 @@
             },
             muaNgay() {
                 (this.donMuaNgay.lstChiTietDonDatHang as ChiTietDonDatHang[]).push(this.chiTietDonMuaNgay);
-                DonDatHangApi.insert(this.donMuaNgay).then(res => {
+                DonDatHangApi.insert(this.sanPham.sanPhamID, this.soLuong, this.sanPham.giaBan,this.donMuaNgay).then(res => {
                     this.$snotify.success('Đặt mua thành công!');
                     this.dialogMuaNgay = false;
                     this.$eventBus.$emit('UpdateSoDonChuaNhan', 0);

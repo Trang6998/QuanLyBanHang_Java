@@ -53,25 +53,28 @@ public class DonDatHangController {
         return ResponseEntity.ok(donDatHangService.findByProperty(soHieuDon, taiKhoanDatHangID, taiKhoanNhanVienID, tungay, denngay, tinhTrang));
 	}
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody DonDatHang donDatHang) {
-//    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//    	Date henlaytu = null;
-//    	Date henlayden = null;
-//    	if(henlaytu != null)
-//    		henlaytu = sdf.parse(donDatHang.hen);
-//    	if(denNgay != null)
-//    		denngay = sdf.parse(denNgay);
-    	ChiTietDonDatHang ct = donDatHang.getLstChiTietDonDatHang().get(0);
+    public ResponseEntity create(@RequestParam(value = "sanPhamID", required = false) Integer sanPhamID,
+    							 @RequestParam(value = "soLuong", required = false) Integer soLuong,
+    							 @RequestParam(value = "giaXuat", required = false) Double giaXuat,
+    							 @Valid @RequestBody DonDatHang donDatHang) {
     	donDatHangService.save(donDatHang);
     	if (donDatHang.getTinhTrang()==1) {
     		donDatHang.setSoHieuDon("SHĐ" + donDatHang.getDonDatHangID().toString());
     	}
     	
     	donDatHangService.save(donDatHang);
-    	ct.setDonDatHangID(donDatHang.getDonDatHangID());
-    	chiTietDonDatHangService.save(ct);
     	
-        return ResponseEntity.ok().build();
+    	if (sanPhamID != null) {
+    		ChiTietDonDatHang chiTietDonDatHang = new ChiTietDonDatHang();
+            chiTietDonDatHang.setSanPhamID(sanPhamID);
+            chiTietDonDatHang.setSoLuong(soLuong);
+            chiTietDonDatHang.setGiaXuat(giaXuat);
+            
+        	chiTietDonDatHang.setDonDatHangID(donDatHang.getDonDatHangID());
+        	chiTietDonDatHangService.save(chiTietDonDatHang);
+    	}
+    	
+        return ResponseEntity.ok(donDatHang.getDonDatHangID());
     }
     @GetMapping("/gioHang")
     public ResponseEntity<List<ChiTietDonDatHang>> getGioHang(@RequestParam(value = "taiKhoanKhachHangID", required = false) Integer taiKhoanKhachHangID) {
@@ -96,7 +99,7 @@ public class DonDatHangController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DonDatHang> update(@PathVariable int id, @Valid @RequestBody DonDatHang donDatHang) {
+    public ResponseEntity update(@PathVariable int id, @Valid @RequestBody DonDatHang donDatHang) {
         if (donDatHangService.findById(id) == null) {
             ResponseEntity.badRequest().build();
         }
@@ -104,7 +107,7 @@ public class DonDatHangController {
     		donDatHang.setSoHieuDon("SHĐ" + donDatHang.getDonDatHangID().toString());
     	}
     	donDatHangService.save(donDatHang);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(donDatHang.getDonDatHangID());
     }
 
 	@DeleteMapping("/{id}")

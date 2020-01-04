@@ -89,6 +89,7 @@ public class SanPham {
 	
 	@ManyToOne
     @JoinColumn(name="donvitinhid",nullable = true, insertable = false, updatable = false)	
+	@JsonIgnore
     private DonViTinh donViTinh;
 	
 	@ManyToOne
@@ -105,8 +106,23 @@ public class SanPham {
 	private String TenLoai;
 
 	public String getTenLoai() {
-	    return loaiSanPham.getTenLoai();
+	    return loaiSanPham != null ? loaiSanPham.getTenLoai() : "";
 	}
+	
+	@Transient
+	private String TenNhaCungCap;
+
+	public String getTenNhaCungCap() {
+	    return nhaCungCap !=null ? nhaCungCap.getTenNhaCungCap() : "";
+	}
+	
+	@Transient
+	private String TenDonViTinh;
+
+	public String getTenDonViTinh() {
+	    return donViTinh != null ? donViTinh.getTenDonVi() : "";
+	}
+	
 	
     public SanPham() {
 		super();

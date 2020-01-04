@@ -293,7 +293,7 @@
                             });
                         } else {
                             this.loading = true;
-                            DonDatHangApi.insert(this.donDatHang).then(res => {
+                            DonDatHangApi.insert(null as any, null as any, null as any, this.donDatHang).then(res => {
                                 this.$router.push('/dondathang/' + res.donDatHangID);
                                 this.donDatHang = res;
                                 this.isUpdate = true;

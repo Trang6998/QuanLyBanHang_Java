@@ -77,7 +77,7 @@ public class DonDatHang {
 		this.lstChiTietDonDatHang = lstChiTietDonDatHang;
 	}
 
-	@ManyToOne
+	 @ManyToOne
      @JoinColumn(name="taikhoandathangid",nullable = true, insertable = false, updatable = false)
      @JsonIgnore
      private Users userDatHang;
@@ -101,6 +101,20 @@ public class DonDatHang {
 			 return tong;
 		 }
 	 }
+     
+     @Transient
+     private String NguoiDat;
+     
+     public String getNguoiDat() {
+    	 return userDatHang != null? userDatHang.getHoTen() : "";
+     }
+     
+     @Transient
+     private String SoDienThoai;
+     
+     public String getSoDienThoai() {
+    	 return userDatHang != null? userDatHang.getSoDienThoai() : "";
+     }
      
      public DonDatHang() {
 		super();

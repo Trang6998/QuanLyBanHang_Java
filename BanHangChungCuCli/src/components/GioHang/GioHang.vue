@@ -67,9 +67,9 @@
                                         <div class="shopee-input-quantity">
                                             <!--<div style="font-size: 14px; color: dimgrey; padding-left:0px">Số lượng:&nbsp;&nbsp;</div>-->
                                             
-                                            <button class="shopee-button-outline" style="font-size: 14px" @click="donHang.tongTien = ((item.soLuong>1)? donHang.tongTien - item.giaXuat : donHang.tongTien); item.soLuong = (item.soLuong > 1? item.soLuong - 1 : 1); "><v-icon>remove</v-icon></button>
+                                            <button class="shopee-button-outline" style="font-size: 14px" @click="donHang.tongTien = ((item.soLuong>1)? donHang.tongTien - item.giaXuat : donHang.tongTien); item.soLuong = (item.soLuong > 1? item.soLuong - 1 : 1); save(item)"><v-icon>remove</v-icon></button>
                                             <input class="shopee-button-outline shopee-button-outline-mid" style="font-size: 14px; color: dimgrey" readonly type="number" min="1" v-model.number="item.soLuong" />
-                                            <button class="shopee-button-outline" style="font-size: 14px" @click="item.soLuong = item.soLuong + 1 ; donHang.tongTien = donHang.tongTien + item.giaXuat"><v-icon>add</v-icon></button>
+                                            <button class="shopee-button-outline" style="font-size: 14px" @click="item.soLuong = item.soLuong + 1 ; donHang.tongTien = donHang.tongTien + item.giaXuat; save(item)"><v-icon>add</v-icon></button>
                                         </div>
 
                                     </v-card-title>
@@ -216,15 +216,6 @@
             },
         },
         methods: {
-            thayDoiSoLuong(soLuong: number, tang: boolean) {
-                if (tang === true) {
-                    soLuong = soLuong + 1;
-                }
-                else {
-                    if (soLuong > 1)
-                        soLuong = soLuong - 1;
-                }
-            },
             getDataFromApi(): void {
                 DonDatHangApi.getgiohang(this.searchParamsGioHang).then(res => {
                     this.lstGioHang = res as any;
@@ -271,6 +262,13 @@
                     this.dialogConfirmDelete = false;
                 }).catch(res => {
                     this.$snotify.error('Xóa thất bại!');
+                });
+            },
+            save(item : ChiTietDonDatHang): void {
+                ChiTietDonDatHangApi.update(item.chiTietDonDatHangID, item).then(res => {
+                    console.log("ok");
+                }).catch(res => {
+                    this.$snotify.error('Cập nhật số lượng thất bại!');
                 });
             },
             confirm() {

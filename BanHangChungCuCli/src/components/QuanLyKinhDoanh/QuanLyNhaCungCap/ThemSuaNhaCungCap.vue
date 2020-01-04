@@ -10,18 +10,8 @@
                 <v-card-text>
                     <v-form scope="frmAddEdit">
                         <v-layout row wrap>
-                            <v-flex xs6>
-                                <v-text-field v-model="nhaCungCap.maNhaCungCap"
-                                              label="Mã nhà cung cấp"
-                                              type="text"
-                                              :error-messages="errors.collect('Mã nhà cung cấp', 'frmAddEdit')"
-                                              v-validate="'required'"
-                                              data-vv-scope="frmAddEdit"
-                                              data-vv-name="Mã nhà cung cấp"
-                                              clearable></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs6>
+                        
+                            <v-flex xs12>
                                 <v-text-field v-model="nhaCungCap.tenNhaCungCap"
                                               label="Tên nhà cung cấp"
                                               type="text"
@@ -81,8 +71,8 @@
                                     <v-flex xs12>
                                         <h3>Danh sách sản phẩm cung cấp: </h3>
                                     </v-flex>
-                                    <v-flex v-if="nhaCungCap.lstSanPham != null" xs12 sm6 v-for="sp in nhaCungCap.lstSanPham" :key="sp">
-                                        <span>* {{sp}}</span>
+                                    <v-flex xs12 sm6 v-for="sp in dsSanPhamNhaCungCap" :key="sp">
+                                        <span>* {{sp.tenSanPham}}</span>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
@@ -102,8 +92,9 @@
     import { Vue } from 'vue-property-decorator';
     import NhaCungCapApi, { NhaCungCapApiSearchParams } from '@/apiResources/NhaCungCapApi';
     import { NhaCungCap } from '@/models/NhaCungCap';
-    import { SanPhamNhaCungCap } from '@/models/SanPhamNhaCungCap';
+    import { SanPham } from '@/models/SanPham';
     import SanPhamNhaCungCapApi, { SanPhamNhaCungCapApiSearchParams } from '@/apiResources/SanPhamNhaCungCapApi';
+import SanPhamApi, { SanPhamApiSearchParams } from '../../../apiResources/SanPhamApi';
 
     export default Vue.extend({
         $_veeValidate: {
@@ -115,13 +106,13 @@
                 isUpdate: false,
                 nhaCungCap: {} as NhaCungCap,
                 nhaCungCapID: 0,
-                dsSanPhamNhaCungCap: [] as SanPhamNhaCungCap[],
+                dsSanPhamNhaCungCap: [] as SanPham[],
                 dsSanPhamNhaCungCapLoading: false,
                 searchSanPhamNhaCungCap: '',
-                searchParamsSanPhamNhaCungCap: { includeEntities: true } as SanPhamNhaCungCapApiSearchParams,
                 dialog: false,
                 loading: false,
                 searchParamsNhaCungCap: {} as NhaCungCapApiSearchParams,
+                searchParamsSanPham: {} as SanPhamApiSearchParams,
             }
         },
         watch: {
@@ -147,6 +138,7 @@
                 else {
                     this.nhaCungCapID = item.nhaCungCapID;
                     this.getDataFromApi(this.nhaCungCapID);
+                    this.getDsSanPham(this.nhaCungCapID);
                 }
             },
             hide() {
@@ -156,6 +148,12 @@
                 NhaCungCapApi.detail(id).then(res => {
                     this.nhaCungCap = res;
                 });
+            },
+            getDsSanPham(id: number){
+               this.searchParamsSanPham.nhaCungCapID = id;
+               SanPhamApi.search(this.searchParamsSanPham).then(res =>{
+                   this.dsSanPhamNhaCungCap = res as any
+               })
             },
             save(): void {
                 this.$validator.validateAll('frmAddEdit').then((res) => {

@@ -78,9 +78,9 @@ class DonDatHangApi extends BaseApi {
             })
         });
     }
-    insert(donDatHang: DonDatHang): Promise<DonDatHang> {
+    insert(sanPhamID?: number, soLuong?: number, giaXuat?: number, donDatHang?: DonDatHang): Promise<DonDatHang> {
         return new Promise<DonDatHang>((resolve: any, reject: any) => {
-            HTTP.post('dondathang', 
+            HTTP.post('dondathang?sanPhamID=' + sanPhamID + '&soLuong=' + soLuong + '&giaXuat=' + giaXuat, 
                 donDatHang
             ).then((response) => {
                 resolve(response.data);
