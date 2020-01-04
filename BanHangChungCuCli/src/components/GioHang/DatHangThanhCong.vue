@@ -21,8 +21,8 @@
                                     <td style="width: 40% ;padding-left: 0px!important; white-space: nowrap" class="text-nowrap">
                                         <v-layout nowrap style="min-width: 200px">
                                             <v-flex sm4>
-                                                <v-img v-if="props.item.anhSanPham != null" slot="activator"
-                                                       :src="props.item.anhSanPham"
+                                                <v-img v-if="props.item.sanPham.anhSanPham != null" slot="activator"
+                                                       :src="props.item.sanPham.anhSanPham"
                                                        style="max-width: 100%;" id="img"
                                                        aspect-ratio="1"
                                                        class="grey lighten-2">

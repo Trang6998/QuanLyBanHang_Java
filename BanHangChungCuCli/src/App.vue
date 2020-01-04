@@ -73,7 +73,7 @@
                 right: true,
                 rightDrawer: false,
                 user: this.$store.state.user.User,
-                searchParamsDonDatHang: { includeEntities: true, rowsPerPage: 0, taiKhoanKhachHangID: this.$store.state.user.User.UserId } as GioHangApiSearchParams,
+                searchParamsDonDatHang: { includeEntities: true, rowsPerPage: 0, taiKhoanKhachHangID: this.$store.state.user.User.userId } as GioHangApiSearchParams,
                 soLuong: 0
             };
         },

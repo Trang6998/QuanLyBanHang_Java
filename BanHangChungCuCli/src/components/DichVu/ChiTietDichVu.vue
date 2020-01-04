@@ -13,10 +13,16 @@
               <v-layout row wrap style="padding: 15px">
                   <v-flex xs12 sm5>
                       <template>
-                          <v-carousel style="max-height: 400px">
+                          <v-carousel  v-if="dichVu.media.length != 0" style="max-height: 400px">
                               <v-carousel-item v-for="(item,i) in dichVu.media"
                                                :key="i" style="max-height: 400px"
                                                :src="item.duongLink"
+                                               aspect-ratio="1" class="grey lighten-2">
+                              </v-carousel-item>
+                          </v-carousel>
+                          <v-carousel v-else style="max-height: 400px">
+                              <v-carousel-item style="max-height: 400px"
+                                               :src="dichVu.anhDaiDien"
                                                aspect-ratio="1" class="grey lighten-2">
                               </v-carousel-item>
                           </v-carousel>
@@ -137,7 +143,7 @@
                     if (res) {
                         this.datDichVu.dichVuID = this.dichVu.dichVuID;
                         this.datDichVu.ngayDat = this.$moment();
-                        this.datDichVu.userID = this.$store.state.user.User.UserId;
+                        this.datDichVu.userID = this.$store.state.user.User.userId;
                         this.loading = true;
                         DatDichVuApi.insert(this.datDichVu).then(res => {
                             this.dialogConfirm = false;

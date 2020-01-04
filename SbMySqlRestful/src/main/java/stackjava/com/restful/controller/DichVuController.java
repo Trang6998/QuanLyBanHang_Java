@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import stackjava.com.restful.service.DichVuService;
+import stackjava.com.restful.service.MediaService;
 import stackjava.com.restful.service.ServiceResult;
 import stackjava.com.restful.entities.DichVu;
+import stackjava.com.restful.entities.Media;
 
 @RestController
 @RequestMapping("dichvu")
@@ -26,6 +28,8 @@ import stackjava.com.restful.entities.DichVu;
 public class DichVuController {
 	@Autowired
 	private DichVuService dichVuService;
+	@Autowired
+	private MediaService mediaService;
     @GetMapping
 	public ResponseEntity getALl(@RequestParam(value = "tenDichVu", required = false) String tenDichVu,
 							     @RequestParam(value = "trangThai", required = false) Boolean trangThai){
@@ -42,7 +46,12 @@ public class DichVuController {
 	}
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody DichVu dichVu) {
-        return ResponseEntity.ok(dichVuService.save(dichVu));
+    	dichVuService.save(dichVu);
+    	for (Media m : dichVu.getMedia()) {
+    		m.setDichVuID(dichVu.getDichVuID());
+    		mediaService.save(m);
+    	}
+        return ResponseEntity.ok(dichVu.getDichVuID());
     }
 
     @GetMapping("/{id}")

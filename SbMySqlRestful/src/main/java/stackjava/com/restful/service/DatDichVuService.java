@@ -19,8 +19,8 @@ public class DatDichVuService {
 	public Iterable<DatDichVu> findAll(){
 		return datDichVuRepository.findAll();
 	}
-	public List<DatDichVu> findByProperty(String tenDichVu, Date tuNgay, Date denNgay, Integer dichVuID){
-		return datDichVuRepository.findByProperty(tenDichVu, tuNgay, denNgay, dichVuID);
+	public List<DatDichVu> findByProperty(String tenDichVu, Date tuNgay, Date denNgay, Integer dichVuID, Integer userID){
+		return datDichVuRepository.findByProperty(tenDichVu, tuNgay, denNgay, dichVuID, userID);
 	}
 	public Optional<DatDichVu> findById(int id){
 		return datDichVuRepository.findById(id);

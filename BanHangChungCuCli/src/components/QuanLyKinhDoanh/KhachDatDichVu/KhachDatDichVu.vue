@@ -2,36 +2,18 @@
     <v-flex xs12>
         <v-layout row wrap>
             <v-flex xs12><h3>Danh sách khách hàng đặt dịch vụ</h3></v-flex>
-            <v-flex xs12 md3>
+            <v-flex xs12 md4>
                 <v-text-field label="Tìm kiếm" v-model="searchParamsDatDichVu.tenDichVu" @input="getDataFromApi(searchParamsDatDichVu)"></v-text-field>
             </v-flex>
-            <v-flex xs6 md3>
+            <v-flex xs6 md4>
                 <v-datetimepicker label="Từ ngày" v-model="searchParamsDatDichVu.tuNgay"
                               :max="new Date()" @input="getDataFromApi(searchParamsDatDichVu)"></v-datetimepicker>
             </v-flex>
-            <v-flex xs6 md3>
+            <v-flex xs6 md4>
                 <v-datetimepicker label="Đến ngày" v-model="searchParamsDatDichVu.denNgay"
                               :min="searchParamsDatDichVu.tuNgay" @input="getDataFromApi(searchParamsDatDichVu)"></v-datetimepicker>
             </v-flex>
-            <v-flex xs12 sm3>
-                <v-select :items="dsToaNha"
-                          placeholder="Chọn chung cư"
-                          label="Chọn chung cư"
-                          v-model="searchParamsDatDichVu.toaNhaID"
-                          @change="getDataFromApi(searchParamsDatDichVu)"
-                          item-value="ToaNhaId"
-                          item-text="TenToaNha"
-                          hide-details
-                          autocomplete></v-select>
-            </v-flex>
-            <v-flex xs12>
-                <v-layout nowrap style="padding-right: 5px">
-                    <v-spacer></v-spacer>
-                    <v-btn small color="primary" :href="exportFile()" target="_blank" class="ma-0">
-                        Tải xuống
-                    </v-btn>
-                </v-layout>
-            </v-flex>
+           
             <v-flex xs12>
                 <v-data-table :headers="tableHeader"
                               :items="dsDatDichVu"
@@ -55,6 +37,9 @@
                         <td class="text-xs-center text-nowrap" style="width:100px;">
                             <v-btn flat small color="primary" @click="showGhiNhan(props.item)" class="ma-0">
                                 Ghi nhận
+                            </v-btn>
+                            <v-btn flat small color="primary" @click="confirmDelete(props.item)" class="ma-0">
+                                Xóa
                             </v-btn>
                         </td>
                     </template>
@@ -207,17 +192,6 @@
                     this.$snotify.error('Xóa thất bại!');
                 });
             },
-            // getDanhSachToaNha() {
-            //     HTTP.get('odata/ToaNha').then(res => {
-            //         this.dsToaNha.push({
-            //             ToaNhaId: null as any,
-            //             TenToaNha: 'Tất cả'
-            //         } as any);
-            //         this.dsToaNha.push(...res.data.value);
-            //         this.searchParamsDatDichVu.toaNhaID = this.$store.state.user.User.ToaNhaId;
-            //         this.getDataFromApi(this.searchParamsDatDichVu);
-            //     })
-            // },
         }
     });
 </script>

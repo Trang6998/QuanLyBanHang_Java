@@ -21,7 +21,7 @@
                                 <v-layout nowrap>
                                     <v-flex xs3>
                                         <v-img v-if="item.dichVu.anhDaiDien != null" slot="activator"
-                                               :src="item.anhDaiDien"
+                                               :src="item.dichVu.anhDaiDien"
                                                style="max-width: 100%;" id="img"
                                                aspect-ratio="1"
                                                class="grey lighten-2">
@@ -101,7 +101,7 @@
                     { text: 'Ghi chú', value: 'ghiChu', align: 'center', sortable: true },
                     { text: 'Thao tác', value: '#', align: 'center', sortable: false },
                 ],
-                searchParamsDatDichVu: { includeEntities: true, rowsPerPage: 0, userID: this.$store.state.user.User.UserId } as DatDichVuApiSearchParams,
+                searchParamsDatDichVu: { includeEntities: true, rowsPerPage: 0, userID: this.$store.state.user.User.userId } as DatDichVuApiSearchParams,
                 loadingTable: false,
                 selectedDatDichVu: {} as DatDichVu,
                 dialogConfirmDelete: false,

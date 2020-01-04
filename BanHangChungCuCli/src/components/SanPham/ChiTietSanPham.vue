@@ -16,14 +16,15 @@
             <v-layout row wrap style="padding: 15px">
                 <v-flex xs12 sm5>
                     <template>
-                        <v-carousel style="max-height: 400px">
-                            <v-carousel-item v-for="(item,i) in sanPham.media" v-if="sanPham.media.length != 0"
+                        <v-carousel v-if="sanPham.media.length != 0" style="max-height: 400px">
+                            <v-carousel-item v-for="(item,i) in sanPham.media" 
                                              :key="i" style="max-height: 400px"
                                              :src="item.duongLink"
                                              aspect-ratio="1" class="grey lighten-2">
                             </v-carousel-item>
-                            <v-carousel-item v-else
-                                             style="max-height: 400px"
+                        </v-carousel>
+                        <v-carousel v-else style="max-height: 400px">
+                            <v-carousel-item style="max-height: 400px"
                                              :src="sanPham.anhSanPham"
                                              aspect-ratio="1" class="grey lighten-2">
                             </v-carousel-item>
@@ -225,7 +226,7 @@
                 this.chiTietDonMuaNgay.soLuong = this.soLuong;
                 this.chiTietDonMuaNgay.sanPhamID = this.sanPham.sanPhamID;
                 this.chiTietDonMuaNgay.giaXuat = this.sanPham.giaBan;
-                this.donMuaNgay.taiKhoanDatHangID = this.$store.state.user.User.UserId;
+                this.donMuaNgay.taiKhoanDatHangID = this.$store.state.user.User.userId;
                 this.donMuaNgay.ngayDat = this.$moment();
                 this.donMuaNgay.tinhTrang = 1;
             },
@@ -250,7 +251,7 @@
                 this.paramsThemVaoGio.sanPhamID = this.sanPham.sanPhamID;
                 this.paramsThemVaoGio.soLuong = this.soLuong;
                 this.paramsThemVaoGio.giaXuat = this.sanPham.giaBan;
-                this.paramsThemVaoGio.taiKhoanKhachHangID = this.$store.state.user.User.UserId;
+                this.paramsThemVaoGio.taiKhoanKhachHangID = this.$store.state.user.User.userId;
                 SanPhamApi.insertCart(this.paramsThemVaoGio).then(res => {
                     this.loading = false;
                     this.$eventBus.$emit('UpdateGioHang', 0);

@@ -7,26 +7,13 @@
                         <h3>Danh sách dịch vụ</h3>
                     </v-flex>
                     <v-flex xs12>
-                        <v-layout row wrap>
-                            <v-flex xs6 md4>
+                        <v-layout nowrap>
+                            <v-flex xs6>
                                 <v-text-field label="Tìm kiếm" ma-0 pa-0 hide-details v-model="searchParamsDichVu.tenDichVu" @input="getDataFromApi(searchParamsDichVu)"></v-text-field>
                             </v-flex>
-                            <v-flex xs6 md4>
-                                <v-autocomplete :items="dsToaNha"
-                                                placeholder="Chọn chung cư"
-                                                label="Chọn chung cư"
-                                                v-model="searchParamsDichVu.toaNhaID"
-                                                @change="getDataFromApi(searchParamsDichVu)"
-                                                item-value="ToaNhaId"
-                                                item-text="TenToaNha"
-                                                hide-details></v-autocomplete>
-                            </v-flex>
-                            <v-flex xs12>
-                                <v-layout norwap>
-                                    <v-spacer></v-spacer>
-                                    <v-btn small @click="showModalThemSuaDichVu(false,{anhDaiDien: null})" style="margin-top: auto" color="primary">Thêm dịch vụ</v-btn>
-                                </v-layout>
-                            </v-flex>
+                            <v-spacer></v-spacer>
+                                    <v-btn small @click="showModalThemSuaDichVu(false,{anhDaiDien: null})" color="primary">Thêm dịch vụ</v-btn>
+                                
                         </v-layout>
                     </v-flex>
                     <v-flex xs12>

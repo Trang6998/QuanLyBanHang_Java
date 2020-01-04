@@ -13,20 +13,7 @@
                             <v-flex xs4>
                                 <v-layout row wrap>
                                     <v-flex xs12>
-                                        <v-img src='/static/images/bao-tri-dieu-hoa-trung-tam.jpg' slot="activator"
-                                            style="max-width: 100%;" id="img"
-                                            aspect-ratio="1"
-                                            class="grey lighten-2">
-                                            <template v-slot:placeholder>
-                                                <v-layout fill-height
-                                                        align-center
-                                                        justify-center
-                                                        ma-0>
-                                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                                                </v-layout>
-                                            </template>
-                                        </v-img>
-                                        <!-- <v-tooltip bottom>
+                                        <v-tooltip bottom>
                                           
                                             <v-img v-if="dichVu.anhDaiDien != null" slot="activator"
                                                    :src="dichVu.anhDaiDien"
@@ -57,7 +44,7 @@
                                             </v-img>
                                             <span>Nhấn để thay đổi ảnh đại diện</span>
                                         </v-tooltip>
-                                        <input type="file" accept="image/*" style="display:none;" ref="inpFile" id="File" @change="changeImg()" capture="camera"> -->
+                                        <input type="file" accept="image/*" style="display:none;" ref="inpFile" id="File" @change="changeImg()" capture="camera">
 
                                     </v-flex>
                                     <v-flex xs12>
@@ -78,7 +65,7 @@
                                             <template v-slot:item="props">
                                                 <v-flex xs3>
                                                     <v-card style="position:relative" class="wrapper">
-                                                        <v-img @click="ganAnhDaiDien(props.item.duongLink)"  v-if="props.item.duongLink != null"
+                                                        <v-img @click="ganAnhDaiDien(props.item.duongLink)" v-if="props.item.duongLink != null"
                                                                :src="props.item.duongLink"
                                                                aspect-ratio="1"
                                                                class="grey lighten-2">
@@ -91,7 +78,7 @@
                                                                 </v-layout>
                                                             </template>
                                                         </v-img>
-                                                        <v-img @click="ganAnhDaiDien(props.item.duongLink)"  v-else
+                                                        <v-img @click="ganAnhDaiDien(props.item.duongLink)" v-else
                                                                src='/static/images/photo-3x4.jpg'
                                                                aspect-ratio="1"
                                                                class="grey lighten-2">
@@ -105,7 +92,7 @@
                                                             </template>
                                                         </v-img>
 
-                                                        <v-btn @click="deleteMedia(props.item)" color="red" class="buttondelete white--text" small style="position: absolute; right:-14px; top: -14px; width: 18px; height: 18px"  icon><v-icon style="font-size: 12px;" small>close</v-icon></v-btn>
+                                                        <v-btn @click="deleteMedia(props.item)" color="red" class="buttondelete white--text" small style="position: absolute; right:-14px; top: -14px; width: 18px; height: 18px" icon><v-icon style="font-size: 12px;" small>close</v-icon></v-btn>
 
                                                     </v-card>
                                                 </v-flex>
@@ -123,7 +110,7 @@
                             </v-flex>
                             <v-flex xs8>
                                 <v-layout row wrap>
-                                    <v-flex xs12 sm6>
+                                    <v-flex xs12>
                                         <v-text-field v-model="dichVu.tenDichVu"
                                                       label="Tên dịch vụ"
                                                       type="text"
@@ -133,14 +120,7 @@
                                                       data-vv-name="Tên dịch vụ"
                                                       clearable></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 md6>
-                                        <v-autocomplete :items="dsToaNha"
-                                                        label="Chọn chung cư"
-                                                        v-model="dichVu.toaNhaID"
-                                                        item-value="ToaNhaId"
-                                                        item-text="TenToaNha"
-                                                        hide-details></v-autocomplete>
-                                    </v-flex>
+                                   
                                     <v-flex xs12>
                                         <v-textarea rows="3" v-model="dichVu.moTaNgan"
                                                     label="Mô tả ngắn"
@@ -245,7 +225,7 @@ import MediaApi from '@/apiResources/MediaApi';
                 //this.getDanhSachToaNha();
                 this.$validator.errors.clear("frmAddEdit");
                 this.isUpdate = isUpdate;
-              
+                this.dichVuID = 0;
                 if (this.isUpdate !== true) {
                     this.dichVu = {
                         trangThai: true,
@@ -262,7 +242,7 @@ import MediaApi from '@/apiResources/MediaApi';
             getDataFromApi(id: number): void {
                 DichVuApi.detail(id).then(res => {
                     this.dichVu = res;
-                    //this.itemsAnh = res.media;
+                    this.itemsAnh = res.media;
                 }); 
             },
             hide() {
@@ -287,7 +267,6 @@ import MediaApi from '@/apiResources/MediaApi';
                 this.$validator.validateAll('frmAddEdit').then((res) => {
                     if (res) {
                         this.dichVu.datDichVu = undefined;
-                        this.dichVu.media = undefined;
                         if (this.isUpdate) {
                             this.loading = true;
                             DichVuApi.update(this.dichVu.dichVuID, this.dichVu).then(res => {
@@ -304,7 +283,7 @@ import MediaApi from '@/apiResources/MediaApi';
                             DichVuApi.insert(this.dichVu).then(res => {
                                 this.dialog = false;
                                 this.$emit("getData");
-                                this.dichVu = res;
+                                this.dichVuID = res.dichVuID;
                                 this.isUpdate = true;
                                 this.loading = false;
                                 this.$snotify.success('Thêm mới thành công!');

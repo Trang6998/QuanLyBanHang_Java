@@ -195,7 +195,7 @@
         },
         methods: {
             getDataFromApi(searchParamsDonDatHang: DonDatHangApiSearchParams): void {
-                searchParamsDonDatHang.taiKhoanDatHangID = this.$store.state.user.User.UserId;
+                searchParamsDonDatHang.taiKhoanDatHangID = this.$store.state.user.User.userId;
                 this.loadingTable = true;
                 DonDatHangApi.search(searchParamsDonDatHang).then(res => {
                     this.tongTien = 0;

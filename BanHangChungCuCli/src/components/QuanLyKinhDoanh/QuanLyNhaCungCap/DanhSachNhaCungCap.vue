@@ -5,16 +5,13 @@
                 <h3>Danh sách nhà cung cấp</h3>
             </v-flex>
             <v-flex xs12>
-                <v-layout row wrap>
+                <v-layout nowrap>
                     <v-flex xs12 md4>
                         <v-text-field ma-0 pa-0 label="Tìm kiếm" hide-details v-model="searchParamsNhaCungCap.tenNhaCungCap" @input="getDataFromApi(searchParamsNhaCungCap)"></v-text-field>
                     </v-flex>
-                    <v-flex xs12>
-                        <v-layout norwap>
-                            <v-spacer></v-spacer>
-                            <v-btn small @click="showModalThemSuaNhaCungCap(false,{})" style="margin-top: auto" color="primary">Thêm nhà cung cấp</v-btn>
-                        </v-layout>
-                    </v-flex>
+                    <v-spacer></v-spacer>
+                            <v-btn small @click="showModalThemSuaNhaCungCap(false,{})"  color="primary">Thêm nhà cung cấp</v-btn>
+                        
                 </v-layout>
             </v-flex>
             <v-layout row wrap>

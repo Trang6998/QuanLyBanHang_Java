@@ -32,7 +32,7 @@
                                     </v-layout>
                                 </template>
                             </v-img>
-                            <v-img v-else src='/static/images/bao-tri-dieu-hoa-trung-tam.jpg' slot="activator"
+                            <v-img v-else src='/static/images/photo-3x4.jpg' slot="activator"
                                    style="max-width: 100%;" id="img"
                                    aspect-ratio="1"
                                    class="grey lighten-2">

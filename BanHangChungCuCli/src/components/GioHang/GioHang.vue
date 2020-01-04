@@ -19,7 +19,7 @@
                             <v-layout nowrap>
                                 <v-flex xs3 sm2>
                                     <v-img v-if="item.sanPham && item.sanPham.anhSanPham != null" slot="activator"
-                                           :src="item.anhSanPham"
+                                           :src="item.sanPham.anhSanPham"
                                            style="max-width: 100%;" id="img"
                                            aspect-ratio="1"
                                            class="grey lighten-2">
@@ -182,7 +182,7 @@
         data() {
             return {
                 thoigian: 'moithoigian',
-                searchParamsGioHang: { includeEntities: true, rowsPerPage: 0, taiKhoanKhachHangID: this.$store.state.user.User.UserId } as GioHangApiSearchParams,
+                searchParamsGioHang: { includeEntities: true, rowsPerPage: 0, taiKhoanKhachHangID: this.$store.state.user.User.userId } as GioHangApiSearchParams,
                 date: new Date().toISOString().substr(0, 10),
                 menu: false,
                 modal: false,

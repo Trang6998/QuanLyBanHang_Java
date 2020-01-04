@@ -366,6 +366,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                 this.getDanhMuc();
                 this.getDonVi();
                 this.getNhaCungCap();
+                this.sanPhamID = 0;
                 this.$validator.errors.clear("frmAddEdit");
                 this.isUpdate = isUpdate;
                 if (this.isUpdate !== true) {
@@ -373,7 +374,6 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                         anhSanPham: null as any,
                         anHienNhaSanXuat: true,
                         anHienSanPham: true,
-                        sanPhamNhaCungCap: [] as SanPhamNhaCungCap[],
                         thuTu: 1,
                         media: [] as Media[]
                     } as SanPham;
@@ -499,7 +499,6 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                             else
                                 media.sanPhamID = this.sanPhamID;
                             (this.sanPham.media as Media[]).push(media);
-
                         })
                 } else {
                     this.$snotify.error('Tên file chỉ chứa ký tự chữ, số và dấu "_"');

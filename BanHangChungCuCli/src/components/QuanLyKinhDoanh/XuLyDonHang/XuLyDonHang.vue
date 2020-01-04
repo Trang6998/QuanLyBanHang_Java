@@ -2,32 +2,16 @@
     <v-flex xs12>
         <v-layout row wrap>
             <v-flex xs12><h3>Danh sách đơn đặt hàng</h3></v-flex>
-            <v-flex xs12 md3>
+            <v-flex xs12 md4>
                 <v-datetimepicker label="Từ ngày" hide-details v-model="searchParamsDonDatHang.tuNgay"
                                   :max="new Date()"
                                   @input="getDataFromApi(searchParamsDonDatHang)"></v-datetimepicker>
             </v-flex>
-            <v-flex xs12 md3>
+            <v-flex xs12 md4>
                 <v-datetimepicker label="Đến ngày" hide-details v-model="searchParamsDonDatHang.denNgay"
                                   :min="searchParamsDonDatHang.tuNgay" @input="getDataFromApi(searchParamsDonDatHang)"></v-datetimepicker>
             </v-flex>
-            <v-flex xs12 sm4>
-                <v-select :items="dsToaNha"
-                          placeholder="Chọn chung cư"
-                          label="Chọn chung cư"
-                          v-model="searchParamsDonDatHang.toaNhaID"
-                          @change="getDataFromApi(searchParamsDonDatHang)"
-                          item-value="ToaNhaId"
-                          item-text="TenToaNha"
-                          hide-details
-                          autocomplete></v-select>
-            </v-flex>
-            <v-flex xs12 sm2>
-                <v-layout nowrap>
-                    <v-spacer></v-spacer>
-                    <v-btn small @click="showModalTongHopDon" style="margin-top: 20px" color="primary">Tổng hợp đơn</v-btn>
-                </v-layout>
-            </v-flex>
+            
             <v-flex xs12>
                 <v-radio-group hide-details v-model="searchParamsDonDatHang.tinhTrang" @change="getDataFromApi(searchParamsDonDatHang)" row>
                     <v-radio label="Tất cả" :value="null"></v-radio>
@@ -38,14 +22,6 @@
 
 
                 </v-radio-group>
-            </v-flex>
-            <v-flex xs12>
-                <v-layout nowrap style="padding-right: 5px">
-                    <v-spacer></v-spacer>
-                    <v-btn small color="primary" :href="exportFile()" target="_blank" class="ma-0">
-                        Tải xuống
-                    </v-btn>
-                </v-layout>
             </v-flex>
             <v-flex xs12>
                 <v-data-table :headers="tableHeader"
@@ -116,7 +92,7 @@
                             </v-tooltip>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                    <v-btn icon flat small v-on="on" color="red" @click="showCapNhatDonHang(props.item)" class="ma-0" v-if="props.item.tinhTrang != 3 && props.item.tinhTrang != 4">
+                                    <v-btn icon flat small v-on="on" color="red" @click="confirmDelete(props.item)" class="ma-0" v-if="props.item.tinhTrang != 3 && props.item.tinhTrang != 4">
                                         <v-icon small>delete</v-icon>
                                     </v-btn>
                                 </template>

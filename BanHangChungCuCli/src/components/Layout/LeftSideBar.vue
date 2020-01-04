@@ -111,26 +111,26 @@
                     title: 'Trang chủ',
                     icon: 'home',
                     link: '/',
-                    show: true,//this.user!==null? true : false,
+                    show: this.user!==null? true : false,
                     items: [
-                        { title: 'Sản phẩm', link: '/danh-muc-san-pham', show: true }, //this.user !== null ? true : false },
-                        { title: 'Dịch vụ', link: '/dich-vu', show: true },// this.user !== null ? true : false },
-                        { title: 'Đơn hàng', link: '/danh-sach-don-hang', show:true },// this.user !== null ? true : false },
-                        { title: 'Dịch vụ đã đặt', link: '/dich-vu-cua-toi', show: true },//this.user !== null ? true : false }
+                        { title: 'Sản phẩm', link: '/danh-muc-san-pham', show: this.user !== null ? true : false },
+                        { title: 'Dịch vụ', link: '/dich-vu', show: this.user !== null ? true : false },
+                        { title: 'Đơn hàng', link: '/danh-sach-don-hang', show: this.user !== null ? true : false },
+                        { title: 'Dịch vụ đã đặt', link: '/dich-vu-cua-toi', show: this.user !== null ? true : false }
                     ] 
                 },
                     {
                         title: 'Quản lý kinh doanh',
                         icon: 'account_circle',
                         link: '/',
-                        show: true,//this.user !== null && this.user.LoaiTaiKhoanId !== 1? true: false,
+                        show: this.user !== null && this.user.loaiUser !== 1? true: false,
                         items: [
-                            { title: 'Quản lý dịch vụ', link: '/ql-dich-vu', show:true },// (this.user !== null && this.user.LoaiTaiKhoanId === 2 || this.user.LoaiTaiKhoanId === 4) ? true : false, },
-                            { title: 'Quản lý danh mục', link: '/ql-danh-muc', show: true },//(this.user !== null && this.user.LoaiTaiKhoanId === 2 || this.user.LoaiTaiKhoanId === 4) ? true : false, },
-                            { title: 'Quản lý sản phẩm', link: '/ql-san-pham', show: true },//(this.user !== null && this.user.LoaiTaiKhoanId === 2 || this.user.LoaiTaiKhoanId === 4) ? true : false, },
-                            { title: 'Quản lý nhà cung cấp', link: '/ql-nha-cung-cap', show: true },//(this.user !== null && this.user.LoaiTaiKhoanId === 2 || this.user.LoaiTaiKhoanId === 4) ? true : false, },
-                            { title: 'Khách đặt dịch vụ', link: '/khach-dat-dich-vu', show: true },//(this.user !== null && this.user.LoaiTaiKhoanId === 2 ? true : false)},
-                            { title: 'Xử lý đơn hàng', link: '/xu-ly-don-hang', action: 'add', show: true },//(this.user != null && this.user.LoaiTaiKhoanId === 2 || this.user.LoaiTaiKhoanId === 3) ? true : false},
+                            { title: 'Quản lý dịch vụ', link: '/ql-dich-vu', show: (this.user !== null && this.user.loaiUser === 2 || this.user.loaiUser === 4) ? true : false, },
+                            { title: 'Quản lý danh mục', link: '/ql-danh-muc', show: (this.user !== null && this.user.loaiUser === 2 || this.user.loaiUser === 4) ? true : false, },
+                            { title: 'Quản lý sản phẩm', link: '/ql-san-pham', show: (this.user !== null && this.user.loaiUser === 2 || this.user.loaiUser === 4) ? true : false, },
+                            { title: 'Quản lý nhà cung cấp', link: '/ql-nha-cung-cap', show: (this.user !== null && this.user.loaiUser === 2 || this.user.loaiUser === 4) ? true : false, },
+                            { title: 'Khách đặt dịch vụ', link: '/khach-dat-dich-vu', show: (this.user !== null && this.user.loaiUser === 2 ? true : false)},
+                            { title: 'Xử lý đơn hàng', link: '/xu-ly-don-hang', action: 'add', show: (this.user != null && this.user.loaiUser === 2 || this.user.loaiUser === 3) ? true : false},
                             //{ title: 'Hủy hàng/ Thanh lý', link: '/thanh-ly-huy-hang'},
                         ]
                     },
@@ -138,11 +138,11 @@
                         title: 'Báo cáo thống kê',
                         icon: 'list_alt',
                         link: '/',
-                        show: (this.user !== null && this.user.LoaiTaiKhoanId === 2 ? true : false),
+                        show: false,
                         items: [
-                            { title: 'Mẫu 01 & 05', link: 'ds-mau-1', show: (this.user !== null && this.user.LoaiTaiKhoanId === 2 ? true : false) },
-                            { title: 'Mẫu 02 & 04', link: 'ds-mau-2', show: (this.user !== null && this.user.LoaiTaiKhoanId === 2 ? true : false) },
-                            { title: 'Mẫu 03', link: 'ds-mau-3', show: (this.user !== null && this.user.LoaiTaiKhoanId === 2 ? true : false) },
+                            { title: 'Mẫu 01 & 05', link: 'ds-mau-1', show: (this.user !== null && this.user.loaiUser === 2 ? true : false) },
+                            { title: 'Mẫu 02 & 04', link: 'ds-mau-2', show: (this.user !== null && this.user.loaiUser === 2 ? true : false) },
+                            { title: 'Mẫu 03', link: 'ds-mau-3', show: (this.user !== null && this.user.loaiUser === 2 ? true : false) },
 
                         ]
                     },

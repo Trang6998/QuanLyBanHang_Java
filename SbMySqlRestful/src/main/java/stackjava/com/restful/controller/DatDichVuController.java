@@ -33,7 +33,8 @@ public class DatDichVuController {
 	public ResponseEntity getALl(@RequestParam(value = "tenDichVu", required = false) String tenDichVu,
 							     @RequestParam(value = "tuNgay", required = false) String tuNgay,
 							     @RequestParam(value = "denNgay", required = false) String denNgay,
-							     @RequestParam(value = "dichVuID", required = false) Integer dichVuID) throws ParseException{
+							     @RequestParam(value = "dichVuID", required = false) Integer dichVuID,
+							     @RequestParam(value = "userID", required = false) Integer userID) throws ParseException{
    	
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     	Date tungay = null;
@@ -42,7 +43,7 @@ public class DatDichVuController {
     		tungay = sdf.parse(tuNgay);
     	if(denNgay != null)
     		denngay = sdf.parse(denNgay);
-        return ResponseEntity.ok(datDichVuService.findByProperty(tenDichVu, tungay, denngay, dichVuID));
+        return ResponseEntity.ok(datDichVuService.findByProperty(tenDichVu, tungay, denngay, dichVuID, userID));
 	}
     @PostMapping
     public ResponseEntity create(@Valid @RequestBody DatDichVu dichVu) {

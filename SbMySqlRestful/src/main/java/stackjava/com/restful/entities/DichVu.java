@@ -76,11 +76,21 @@ public class DichVu {
 	public String getBaiViet() {
 		return BaiViet;
 	}
+	
+	@OneToMany(mappedBy = "dichVu", cascade = CascadeType.ALL)
+    private List<Media> lstMedia;
+	
+	public List<Media> getMedia() {
+		return lstMedia;
+	}
+	public void setMedia(List<Media> lstMedia) {
+		this.lstMedia = lstMedia;
+	}
 	public DichVu() {
 		super();
 	}
 	public DichVu(String TenDichVu, String AnhDaiDien, String MoTaNgan, Boolean TrangThai, String BaiViet,
-			String ToaNha, List<DatDichVu> DatDichVu) {
+			String ToaNha, List<DatDichVu> DatDichVu, List<Media> media) {
 		super();
 		this.TenDichVu = TenDichVu;
 		this.AnhDaiDien = AnhDaiDien;
@@ -89,6 +99,7 @@ public class DichVu {
 		this.BaiViet = BaiViet;
 		this.ToaNha = ToaNha;
 		this.lstDatDichVu = DatDichVu;
+		this.lstMedia = media;
 	}
 	public void setBaiViet(String BaiViet) {
 		this.BaiViet = BaiViet;

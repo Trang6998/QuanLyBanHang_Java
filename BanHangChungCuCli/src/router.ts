@@ -33,7 +33,7 @@ export default new Router({
             path: '/',
             name: 'Home',
             component: Home,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/error-page',
@@ -50,49 +50,49 @@ export default new Router({
             path: '/ql-danh-muc',
             name: 'DanhSachDanhMuc',
             component: DanhSachDanhMuc  ,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/ql-dich-vu',
             name: 'DanhSachDichVu',
             component: DanhSachDichVu  ,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/ql-san-pham',
             name: 'DanhSachSanPham',
             component: DanhSachSanPham  ,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/ql-nha-cung-cap',
             name: 'DanhSachNhaCungCap',
             component: DanhSachNhaCungCap  ,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/khach-dat-dich-vu',
             name: 'KhachDatDichVu',
             component: KhachDatDichVu  ,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/xu-ly-don-hang',
             name: 'XuLyDonHang',
             component: XuLyDonHang  ,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
 		{
             path: '/chi-tiet-san-pham/:id',
             name: 'ChiTietSanPham',
             component: ChiTietSanPham,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         // mua hang
@@ -100,78 +100,78 @@ export default new Router({
             path: '/danh-muc-san-pham',
             name: 'DanhMucSanPham',
             component: DanhMucSanPham,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/danh-muc-san-pham/:id',
             name: 'DanhSachSanPham',
             component: SanPham,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/',
             name: 'Home',
             component: Home,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/chi-tiet-san-pham/:id',
             name: 'ChiTietSanPham',
             component: ChiTietSanPham,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/gio-hang',
             name: 'GioHang',
             component: GioHang,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
 
         },
         {
             path: '/dich-vu',
             name: 'dsDichVu',
             component: dsDichVu,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/danh-sach-don-hang',
             name: 'DonHang',
             component: DonHang,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/dich-vu-cua-toi',
             name: 'DichVuCuaToi',
             component: DichVuCuaToi,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/dich-vu/:id',
             name: 'ChiTietDichVu',
             component: ChiTietDichVu,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/ds-mau-1',
             name: 'Mau01',
             component: Mau01,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/ds-mau-2',
             name: 'Mau02',
             component: Mau02,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
         {
             path: '/ds-mau-3',
             name: 'Mau03',
             component: Mau03,
-            //beforeEnter: guardRoute
+            beforeEnter: guardRoute
         },
     ]
 });
@@ -186,18 +186,6 @@ function guardRoute(to: Route, from: Route, next: any): void {
             }
         });
     } else {
-        HTTP.get('/auth/validatetoken')
-            .then(response => {
-                next();
-            })
-            .catch(e => {
-                store.commit('CLEAR_ALL_DATA');
-                next({
-                    path: '/login',
-                    query: {
-                        redirect: to.fullPath
-                    }
-                });
-            });
+        next();
     }
 }

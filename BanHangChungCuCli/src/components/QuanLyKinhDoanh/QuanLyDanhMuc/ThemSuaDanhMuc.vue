@@ -13,35 +13,35 @@
                             <v-flex xs4>
                                 <v-tooltip bottom>
                                     <v-img v-if="danhMuc.anhDaiDien != null" slot="activator"
-                                           :src="danhMuc.anhDaiDien"
-                                           @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
-                                           aspect-ratio="1"
-                                           class="grey lighten-2">
+                                            :src="danhMuc.anhDaiDien"
+                                            @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
+                                            aspect-ratio="1"
+                                            class="grey lighten-2">
                                         <template v-slot:placeholder>
                                             <v-layout fill-height
-                                                      align-center
-                                                      justify-center
-                                                      ma-0>
+                                                        align-center
+                                                        justify-center
+                                                        ma-0>
                                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                                             </v-layout>
                                         </template>
                                     </v-img>
                                     <v-img v-else src='/static/images/photo-3x4.jpg' slot="activator"
-                                           @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
-                                           aspect-ratio="1"
-                                           class="grey lighten-2">
+                                            @click="$refs.inpFile.click()" style="max-width: 100%;" id="img"
+                                            aspect-ratio="1"
+                                            class="grey lighten-2">
                                         <template v-slot:placeholder>
                                             <v-layout fill-height
-                                                      align-center
-                                                      justify-center
-                                                      ma-0>
+                                                        align-center
+                                                        justify-center
+                                                        ma-0>
                                                 <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                                             </v-layout>
                                         </template>
                                     </v-img>
                                     <span>Nhấn để thay đổi ảnh đại diện</span>
                                 </v-tooltip>
-                                <input type="file" accept="image/*" style="display:none;" ref="inpFile" id="File" @change="changeImg()" capture="camera">
+                                <input type="file" accept="image/*" style="display:none;" ref="inpFile" id="FileDM" @change="changeImg()" capture="camera">
 
                             </v-flex>
                             <v-flex xs8>
@@ -97,7 +97,7 @@
     import LoaiSanPhamApi, { LoaiSanPhamApiSearchParams } from '@/apiResources/LoaiSanPhamApi';
     import { LoaiSanPham } from '@/models/LoaiSanPham';
     import APIS from '@/apisServer';
-    import { HTTP } from '@/HTTPServices';
+    import { HTTP } from '@/http-servicesNew';
 
     export default Vue.extend({
         $_veeValidate: {
@@ -191,12 +191,14 @@
             },
             changeImg() {
                 var formData = new FormData()
-                let files = (document as any).querySelector('#File').files[0]
+                let files = (document as any).querySelector('#FileDM').files[0]
+                debugger
                 var re = /^\w+\.(?:jpg|png|gif|jpeg)$/g
                 if (re.test(files.name)) {
                     formData.append('img', files)
                     HTTP.post('/api/img', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                         .then(res => {
+                            debugger
                             this.danhMuc.anhDaiDien = res.data;
                         })
                 } else {

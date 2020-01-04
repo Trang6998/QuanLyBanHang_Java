@@ -17,11 +17,13 @@ public interface DatDichVuRepository extends JpaRepository<DatDichVu, Integer> {
 	 			   + "WHERE (dv.TenDichVu like CONCAT('%',:tenDichVu,'%') OR :tenDichVu is NULL) "
 	 			   + "AND (ddv.NgayDat >= :tuNgay OR :tuNgay is NULL) "
 	 			   + "AND (ddv.NgayDat <= :denNgay OR :denNgay is NULL) "
-	 			   + "AND (ddv.DichVuID = :dichVuID OR :dichVuID is NULL)")
+	 			   + "AND (ddv.DichVuID = :dichVuID OR :dichVuID is NULL) "
+	 			   + "AND (ddv.UserID = :userID OR :userID is NULL)")
      public List<DatDichVu> findByProperty( @Param("tenDichVu") String tenDichVu,
     		 								@Param("tuNgay") Date tuNgay,
     		 								@Param("denNgay") Date denNgay,
-    		 								@Param("dichVuID") Integer dichVuID);
+    		 								@Param("dichVuID") Integer dichVuID,
+    		 								@Param("userID") Integer userID);
 }
 
 
