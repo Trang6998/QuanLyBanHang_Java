@@ -39,28 +39,18 @@ export default {
         state.user = {
             Token: {
                 IsAuthenticated: false,
-                Token: null,
-                UserName: null,
-                RefreshToken: null,
-                EffectiveTime: null,
-                ExpiresTime: null
-            },
-            Profile: {
-                Username: null,
-                FullName: null,
             },
             User: {
-                HoGiaDinhId: null,
-                TenChuHo: '',
-                ToaNha: '',
-                Phong: '',
-                SoDienThoai: null,
-                ToaNhaId: null,
-                UserId: null,
-                PhongId: null,
-                LoaiTaiKhoanId: null,
-                AnhDaiDien: null
-            }
+                hoTen: '',
+                email: '',
+                diaChi: '',
+                soDienThoai: null,
+                userID: null,
+                loaiUser: null,
+            },
+            HoGiaDinh: false,
+            QuanTriVien: false,
+            Phong: false
         }
     }
 }

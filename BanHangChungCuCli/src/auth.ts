@@ -31,7 +31,6 @@ export default {
     login(creds: any, redirect: any) {
         let promise = new Promise((resolve, reject) => {
             axios.post(LOGIN_URL, creds).then((response: any) => {
-                debugger
                 console.log(response)
                 if (response.data === 'Login failed!') {
                     reject(response.data);

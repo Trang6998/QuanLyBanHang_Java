@@ -17,9 +17,14 @@
                 <v-flex xs12 sm5>
                     <template>
                         <v-carousel style="max-height: 400px">
-                            <v-carousel-item v-for="(item,i) in sanPham.media"
+                            <v-carousel-item v-for="(item,i) in sanPham.media" v-if="sanPham.media.length != 0"
                                              :key="i" style="max-height: 400px"
                                              :src="item.duongLink"
+                                             aspect-ratio="1" class="grey lighten-2">
+                            </v-carousel-item>
+                            <v-carousel-item v-else
+                                             style="max-height: 400px"
+                                             :src="sanPham.anhSanPham"
                                              aspect-ratio="1" class="grey lighten-2">
                             </v-carousel-item>
                         </v-carousel>

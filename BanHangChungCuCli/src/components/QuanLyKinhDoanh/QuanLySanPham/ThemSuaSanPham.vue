@@ -452,8 +452,7 @@ import { NhaCungCap } from '@/models/NhaCungCap';
                             this.sanPham.ngayDang = new Date();
                             SanPhamApi.insert(this.sanPham).then(res => {
                                 this.$emit("getData");
-                                this.sanPham = res;
-                                this.sanPhamID = res.sanPhamID;
+                                this.sanPhamID = res as any;
                                 this.isUpdate = true;
                                 this.loading = false;
                                 this.$snotify.success('Thêm mới thành công!');

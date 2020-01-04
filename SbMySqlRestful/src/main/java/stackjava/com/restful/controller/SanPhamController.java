@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import stackjava.com.restful.service.ChiTietDonDatHangService;
 import stackjava.com.restful.service.DonDatHangService;
+import stackjava.com.restful.service.MediaService;
 import stackjava.com.restful.service.SanPhamService;
 import stackjava.com.restful.service.ServiceResult;
 import stackjava.com.restful.entities.ChiTietDonDatHang;
 import stackjava.com.restful.entities.DonDatHang;
+import stackjava.com.restful.entities.Media;
 import stackjava.com.restful.entities.SanPham;;
 
 @RestController
@@ -39,6 +41,8 @@ public class SanPhamController {
 	private ChiTietDonDatHangService chiTietDonDatHangService;
 	@Autowired
 	private DonDatHangService donDatHangService;
+	@Autowired
+	private MediaService mediaService;
     @GetMapping
 	public ResponseEntity getALl(@RequestParam(value = "tenSanPham", required = false) String tenSanPham,
 								 @RequestParam(value = "toiThieu", required = false) Double toiThieu,
@@ -50,11 +54,13 @@ public class SanPhamController {
         return ResponseEntity.ok(SanPhamService.findByProperty(tenSanPham, toiThieu, toiDa, nhaCungCapID, loaiSanPhamID, trangThaiAnHien));
 	}
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody SanPham SanPham) {
-//    	 if (SanPhamService.findById(id) == null) {
-//             ResponseEntity.badRequest().build();
-//         }
-        return ResponseEntity.ok(SanPhamService.save(SanPham));
+    public ResponseEntity create(@Valid @RequestBody SanPham sanPham) {
+    	SanPhamService.save(sanPham);
+    	for (Media m : sanPham.getMedia()) {
+    		m.setSanPhamID(sanPham.getSanPhamID());
+    		mediaService.save(m);
+    	}
+        return ResponseEntity.ok(sanPham.getSanPhamID());
     }
     @GetMapping("/themVaoGio")
     public ResponseEntity themVaoGio(@RequestParam(value = "sanPhamID", required = false) Integer sanPhamID,
