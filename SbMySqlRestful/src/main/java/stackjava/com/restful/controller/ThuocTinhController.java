@@ -17,50 +17,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import stackjava.com.restful.entities.NhaCungCap;
-import stackjava.com.restful.service.NhaCungCapService;
+
+import stackjava.com.restful.entities.ThuocTinh;
+
+import stackjava.com.restful.service.ThuocTinhService;
 @RestController
-@RequestMapping("nhacungcap")
+@RequestMapping("thuoctinh")
 @CrossOrigin("*")
-public class NhaCungCapController {
+public class ThuocTinhController {
 	@Autowired
-	private NhaCungCapService nhaCungCapService;
+	private ThuocTinhService thuocTinhService;
     @GetMapping
-	public ResponseEntity getALl(@RequestParam(value = "tenNhaCungCap", required = false) String tenNhaCungCap){	
-    	if(tenNhaCungCap!=null) {
-    		return ResponseEntity.ok(nhaCungCapService.findByName(tenNhaCungCap));
+	public ResponseEntity getALl(@RequestParam(value = "tenThuocTinh", required = false) String tenThuocTinh){	
+    	if(tenThuocTinh!=null) {
+    		return ResponseEntity.ok(thuocTinhService.findByName(tenThuocTinh));
     	}
-        return ResponseEntity.ok(nhaCungCapService.findAll());
+        return ResponseEntity.ok(thuocTinhService.findAll());
 	}
     
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<NhaCungCap>> findById(@PathVariable int id) {
-        if (nhaCungCapService.findById(id) == null) {
+    public ResponseEntity<Optional<ThuocTinh>> findById(@PathVariable int id) {
+        if (thuocTinhService.findById(id) == null) {
             ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(nhaCungCapService.findById(id));
+        return ResponseEntity.ok(thuocTinhService.findById(id));
     }
     
     @PostMapping
-    public ResponseEntity create(@Valid @RequestBody NhaCungCap ncc) {
-        return ResponseEntity.ok(nhaCungCapService.save(ncc));
+    public ResponseEntity create(@Valid @RequestBody ThuocTinh tt) {
+        return ResponseEntity.ok(thuocTinhService.save(tt));
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<NhaCungCap> update(@PathVariable int id, @Valid @RequestBody NhaCungCap ncc) {
-        if (nhaCungCapService.findById(id) == null) {
+    public ResponseEntity<ThuocTinh> update(@PathVariable int id, @Valid @RequestBody ThuocTinh tt) {
+        if (thuocTinhService.findById(id) == null) {
             ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(nhaCungCapService.save(ncc));
+        return ResponseEntity.ok(thuocTinhService.save(tt));
     }
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<NhaCungCap> delete(@PathVariable Integer id) {
-        if (nhaCungCapService.findById(id) == null) {
+	public ResponseEntity<ThuocTinh> delete(@PathVariable Integer id) {
+        if (thuocTinhService.findById(id) == null) {
+        	
             ResponseEntity.badRequest().build();
         }
-        nhaCungCapService.delete(id);
+        thuocTinhService.delete(id);
         return ResponseEntity.ok().build();
     }
 }
